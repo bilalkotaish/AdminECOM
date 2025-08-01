@@ -1,0 +1,104 @@
+.MuiBadge-badge {
+  background: #ff5252 !important;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #f1f1f1;
+}
+.ReactCollapse--collapse {
+  transition: height 300ms;
+}
+a.active button {
+  background: #cecece !important;
+}
+
+#loginsection {
+  background-color: white;
+}
+.css-rizt0-MuiTypography-root {
+  font-size: 14px !important;
+}
+.MuiAppBar-colorPrimary {
+  background: #333a4b !important;
+}
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input arrows for Firefox */
+.no-spinner[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.phone-container {
+  width: 100% !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+  border-radius: 6px;
+}
+
+.phone-container:focus-within {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.phone-input {
+  width: 100% !important;
+  border: none;
+  outline: none;
+}
+.zoomthumbs .swiper-slide {
+  height: auto !important;
+}
+.zoomthumbs {
+  position: relative;
+  padding-top: 50px; /* Ensure it acts as the container for absolutely positioned buttons */
+}
+.zoomthumbs .swiper-button-next {
+  position: absolute;
+  bottom: 0px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 30px !important;
+  border-radius: 0px !important;
+  top: inherit !important;
+}
+
+.zoomthumbs .swiper-button-prev {
+  position: absolute;
+  top: 20px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 30px !important;
+  border-radius: 0px !important;
+}
+.zoomthumbs .swiper-button-prev:hover,
+.zoomthumbs .swiper-button-next:hover {
+  background-color: #ff5252 !important;
+}
+.zoomthumbs .swiper-button-prev:hover::after,
+.zoomthumbs .swiper-button-next:hover::after {
+  color: #f0f5f5 !important;
+}
+.zoomthumbs .swiper-button-next::after {
+  transform: rotate(90deg) !important;
+}
+.zoomthumbs .swiper-button-prev::after {
+  transform: rotate(90deg) !important;
+}
+.zoomthumbs.space .swiper-wrapper {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+.swiper-slide .iiz {
+  height: 400px !important;
+  overflow: hidden !important;
+}
+
+.rsw-editor {
+  width: 100% !important;
+  min-height: 250px !important;
+  background: white !important;
+}
