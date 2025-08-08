@@ -684,8 +684,8 @@ export default function Dashboard() {
 </div>
 
 
-          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
-            <div className="w-full sm:w-auto">
+<div className="flex justify-between items-center px-4 sm:px-6 py-4 border-t border-gray-200">
+<div className="flex items-center gap-2">
               <label className="font-semibold text-[14px] mb-1 block">
                 Items Per Page
               </label>
@@ -798,8 +798,8 @@ export default function Dashboard() {
   </div>
 
   {/* Pagination & Controls */}
-  <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-4 gap-4 bg-gray-50">
-    <div className="w-full sm:w-auto">
+  <div className="flex justify-between items-center px-4 sm:px-6 py-4 border-t border-gray-200">
+  <div className="flex items-center gap-2">
       <label className="block text-sm font-medium text-gray-700 mb-1">
         Items Per Page
       </label>

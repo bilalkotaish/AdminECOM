@@ -120,7 +120,7 @@ export default function AddWeight() {
         <h1 className="text-xl font-bold mb-4 md:mb-0">Add Weight</h1>
       </div>
 
-      <div className="w-[80%] px-4 mt-4">
+      <div className="w-full lg:w-[80%] px-4 mt-4">
         <div className="w-full bg-white shadow-lg rounded-xl p-6">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div className="flex flex-col md:flex-row md:items-center gap-2 w-full">
