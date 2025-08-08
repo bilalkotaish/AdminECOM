@@ -53,9 +53,7 @@ export default function CategoryList() {
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-800">Category List</h2>
         <div className="flex gap-3">
-          <Button className="flex items-center gap-2 !bg-green-500 hover:bg-green-600 !text-white font-semibold px-4 py-2 rounded">
-            Export <BiExport className="text-lg" />
-          </Button>
+         
           <Button
             onClick={() =>
               context.setisOpenPanel({ open: true, model: "Add Category" })
@@ -132,8 +130,8 @@ export default function CategoryList() {
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-t border-gray-200 gap-3">
-        <div className="flex items-center gap-2">
+      <div className="flex justify-between items-center px-4 sm:px-6 py-4 border-t border-gray-200">
+      <div className="flex items-center gap-2">
           <label htmlFor="rowsPerPage" className="text-sm text-gray-600">
             Rows per page:
           </label>

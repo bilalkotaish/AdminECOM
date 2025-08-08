@@ -368,30 +368,38 @@ export default function Dashboard() {
   };
   return (
     <>
-      <div className="w-full p-5 !px-5 !py-2 border bg-[#f1faff] border-[rgba(0,0,0,0.1)] flex items-center gap-8 mb-5">
-        <div className="info ">
-          <h1 className="text-[30px] font-[500] leading-10 mb-3">
-            {" "}
-            Good Morning, <br />
-            <span className="text-primary">Mr.{context.userData?.name} </span>
-            <MdWavingHand className="rotate-270 !text-[#FFFF00] text-[35px] font-[500]" />{" "}
-          </h1>
-          <p>
-            Here's What Happening In Your Store Today!! See The Analytics Now!
-          </p>
+    
+    <div
+  className="p-5 px-5 py-2 border bg-[#f1faff] border-[rgba(0,0,0,0.1)] flex flex-col lg:flex-row items-center justify-between gap-8 mb-5"
+>
+  {/* Text Section */}
+  <div className="info w-full lg:w-[60%]">
+    <h1 className="text-[24px] md:text-[28px] lg:text-[30px] font-medium leading-snug mb-3">
+      Good Morning, <br />
+      <span className="text-primary">Mr. {context.userData?.name}</span>{" "}
+      <MdWavingHand className="inline-block text-yellow-400 text-[30px] ml-2 rotate-[270deg]" />
+    </h1>
+    <p className="text-sm md:text-base mb-2">
+      Here's what’s happening in your store today! See the analytics now!
+    </p>
 
-          <Button
-            onClick={() =>
-              context.setisOpenPanel({ open: true, model: "Add Product" })
-            }
-            className="!bg-blue-600 !text-white !mt-3 w-[30%] gap-1 !items-center"
-          >
-            {" "}
-            <FaPlus /> Add Products
-          </Button>
-        </div>
-        <FcShop className="w-[250px] h-[250px] justify-right" />
-      </div>
+    <Button
+      onClick={() =>
+        context.setisOpenPanel({ open: true, model: "Add Product" })
+      }
+      className="!bg-blue-600 !text-white mt-3 w-30 sm:w-[60%] md:w-[50%] lg:w-[40%] xl:w-[30%] flex !items-center gap-2"
+    >
+      <FaPlus /> Add Products
+    </Button>
+  </div>
+
+  {/* Icon Section */}
+  <div className="w-full lg:w-[40%] flex justify-center">
+    <FcShop className="w-[180px] h-[180px] md:w-[220px] md:h-[220px] lg:w-[250px] lg:h-[250px]" />
+  </div>
+</div>
+
+      
       {product.length !== 0 && orderData.length !== 0 && (
         <DashboardBox
           product={productcount}
@@ -490,196 +498,191 @@ export default function Dashboard() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full text-sm text-left text-gray-600">
-              <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
-                <tr>
-                  <th className="px-4 py-3">
-                    <Checkbox
-                      size="small"
-                      {...label}
-                      onChange={handleSelectAll}
-                      checked={
-                        product.length !== 0
-                          ? product.every((item) => item.checked)
-                          : false
-                      }
-                    />
-                  </th>
-                  <th className="px-4 py-3">Product</th>
-                  <th className="px-4 py-3">Category</th>
-                  <th className="px-4 py-3">Subcategory</th>
-                  <th className="px-4 py-3">Brand</th>
-                  <th className="px-4 py-3">Price</th>
-                  <th className="px-1 py-2">Sales</th>
-                  <th className="px-1 py-2">Rating</th>
-                  <th className="px-4 py-3 min-w-[150px]">Actions</th>
-                </tr>
-              </thead>
+  <table className="min-w-[1000px] w-full text-sm text-left text-gray-700">
+    <thead className="bg-gray-100 text-xs uppercase text-gray-600">
+      <tr>
+        <th className="px-4 py-3">
+          <Checkbox
+            size="small"
+            {...label}
+            onChange={handleSelectAll}
+            checked={
+              product.length !== 0
+                ? product.every((item) => item.checked)
+                : false
+            }
+          />
+        </th>
+        <th className="px-4 py-3">Product</th>
+        <th className="px-4 py-3">Category</th>
+        <th className="px-4 py-3">Subcategory</th>
+        <th className="px-4 py-3">Brand</th>
+        <th className="px-4 py-3">Price</th>
+        <th className="px-2 py-2">Sales</th>
+        <th className="px-2 py-2">Rating</th>
+        <th className="px-4 py-3 min-w-[150px]">Actions</th>
+      </tr>
+    </thead>
 
-              {Array.isArray(product) && product.length === 0 ? (
-                <tbody>
-                  <tr>
-                    <td colSpan={9} className="text-center py-6">
-                      <p className="!text-sm !items-center text-center text-gray-500 my-4">
-                        No products found for this category.
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              ) : (
-                <tbody>
-                  {loading ? (
-                    <tr>
-                      <td colSpan={9} className="text-center py-6">
-                        <CircularProgress color="inherit" size={24} />
-                      </td>
-                    </tr>
-                  ) : (
-                    product.map((product) => (
-                      <tr
-                        key={product._id}
-                        className="bg-white border-b hover:bg-gray-50"
-                      >
-                        <td className="px-4 py-3">
-                          <Checkbox
-                            {...label}
-                            checked={product.checked === true}
-                            onChange={(e) =>
-                              handlecheckboxChange(e, product._id)
-                            }
-                            size="small"
-                          />
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-start gap-4 max-w-md">
-                            <Link
-                              to={`/product/${product._id}`}
-                              className="w-[60px] h-[60px] flex-shrink-0 rounded-lg overflow-hidden border border-gray-200"
-                            >
-                              <LazyLoadImage
-                                alt={product.name || "product"}
-                                effect="blur"
-                                className="w-full h-full object-cover"
-                                src={
-                                  product.images?.[0]?.url || "/placeholder.jpg"
-                                }
-                              />
-                            </Link>
-                            <div className="flex flex-col">
-                              <Link to={`/product/${product._id}`}>
-                                <h3 className="!text-[12px] font-semibold hover:text-primary line-clamp-2">
-                                  {product.description.substring(0, 20) ||
-                                    "N/A"}
-                                </h3>
-                              </Link>
-                              <span className="text-xs whitespace-nowrap text-gray-500 font-[600]">
-                                {product.name.substring(0, 20)}
-                              </span>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3">{product.category.name}</td>
-                        <td className="px-4 py-3">{product.subcatname}</td>
-                        <td className="px-4 py-3">{product.brand}</td>
-                        <td className="px-4 py-3">
-                          <div className="flex flex-col">
-                            <span className="line-through text-gray-400 text-xs">
-                              ${product.oldprice || "0.00"}
-                            </span>
-                            <span className="text-green-600 font-bold text-sm">
-                              ${product.price || "0.00"}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-1 py-1">
-                          <span className="font-semibold text-sm">
-                            {product.sale} Sales
-                          </span>
-                          <ProgressBar type="warning" value={product.sale} />
-                        </td>
-                        <td className="px-1 py-1">
-                          <Rating
-                            name="half-rating-read"
-                            defaultValue={product.rating}
-                            precision={0.5}
-                            readOnly
-                          />
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            {/* Edit Button */}
+    <tbody>
+      {Array.isArray(product) && product.length === 0 ? (
+        <tr>
+          <td colSpan={9} className="text-center py-6">
+            <p className="text-sm text-gray-500">No products found for this category.</p>
+          </td>
+        </tr>
+      ) : loading ? (
+        <tr>
+          <td colSpan={9} className="text-center py-6">
+            <CircularProgress color="inherit" size={24} />
+          </td>
+        </tr>
+      ) : (
+        product.map((product) => (
+          <tr key={product._id} className="bg-white border-b hover:bg-gray-50 transition">
+            <td className="px-4 py-3">
+              <Checkbox
+                {...label}
+                checked={product.checked === true}
+                onChange={(e) => handlecheckboxChange(e, product._id)}
+                size="small"
+              />
+            </td>
 
-                            <Button
-                              size="small"
-                              variant="contained"
-                              color="primary"
-                              sx={{
-                                minWidth: 32,
-                                height: 32,
-                                p: 0,
-                                backgroundColor: "rgb(220 252 231)",
-                                "&:hover": {
-                                  backgroundColor: "rgb(187 247 208)",
-                                },
-                              }}
-                              onClick={() =>
-                                context.setisOpenPanel({
-                                  open: true,
-                                  model: "Edit Product",
-                                  id: product._id,
-                                })
-                              }
-                            >
-                              <AiTwotoneEdit className="text-green-700 text-lg" />
-                            </Button>
+            {/* Product Info */}
+            <td className="px-4 py-3">
+              <div className="flex items-start gap-4 max-w-md">
+                <Link
+                  to={`/product/${product._id}`}
+                  className="w-[60px] h-[60px] flex-shrink-0 rounded-lg overflow-hidden border border-gray-200"
+                >
+                  <LazyLoadImage
+                    alt={product.name || "product"}
+                    effect="blur"
+                    className="w-full h-full object-cover"
+                    src={product.images?.[0]?.url || "/placeholder.jpg"}
+                  />
+                </Link>
+                <div className="flex flex-col">
+                  <Link to={`/product/${product._id}`}>
+                    <h3 className="text-xs font-semibold hover:text-primary line-clamp-2">
+                      {product.description?.substring(0, 40) || "N/A"}
+                    </h3>
+                  </Link>
+                  <span className="text-xs text-gray-500 font-semibold">
+                    {product.name?.substring(0, 30)}
+                  </span>
+                </div>
+              </div>
+            </td>
 
-                            {/* View Button */}
+            <td className="px-4 py-3">{product.category?.name}</td>
+            <td className="px-4 py-3">{product.subcatname}</td>
+            <td className="px-4 py-3">{product.brand}</td>
 
-                            <Button
-                              size="small"
-                              variant="contained"
-                              color="primary"
-                              component={Link}
-                              to={`/product/${product._id}`}
-                              sx={{
-                                minWidth: 32,
-                                height: 32,
-                                p: 0,
-                                backgroundColor: "rgb(219 234 254)",
-                                "&:hover": {
-                                  backgroundColor: "rgb(191 219 254)",
-                                },
-                              }}
-                            >
-                              <IoMdEye className="text-blue-700 text-lg" />
-                            </Button>
+            {/* Price */}
+            <td className="px-4 py-3">
+              <div className="flex flex-col">
+                <span className="line-through text-gray-400 text-xs">
+                  ${product.oldprice || "0.00"}
+                </span>
+                <span className="text-green-600 font-bold text-sm">
+                  ${product.price || "0.00"}
+                </span>
+              </div>
+            </td>
 
-                            <Button
-                              size="small"
-                              variant="contained"
-                              color="error"
-                              sx={{
-                                minWidth: 32,
-                                height: 32,
-                                p: 0,
-                                backgroundColor: "rgb(254 226 226)",
-                                "&:hover": {
-                                  backgroundColor: "rgb(254 202 202)",
-                                },
-                              }}
-                              onClick={() => handleDelete(product._id)}
-                            >
-                              <MdOutlineDeleteOutline className="text-red-700 text-lg" />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              )}
-            </table>
-          </div>
+            {/* Sales */}
+            <td className="px-2 py-2">
+              <span className="font-semibold text-sm">{product.sale} Sales</span>
+              <ProgressBar type="warning" value={product.sale} />
+            </td>
+
+            {/* Rating */}
+            <td className="px-2 py-2">
+              <Rating
+                name="half-rating-read"
+                defaultValue={product.rating}
+                precision={0.5}
+                readOnly
+              />
+            </td>
+
+            {/* Actions */}
+            <td className="px-4 py-3">
+              <div className="flex items-center gap-2">
+                {/* Edit */}
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    minWidth: 32,
+                    height: 32,
+                    p: 0,
+                    backgroundColor: "rgb(220 252 231)",
+                    "&:hover": {
+                      backgroundColor: "rgb(187 247 208)",
+                    },
+                  }}
+                  onClick={() =>
+                    context.setisOpenPanel({
+                      open: true,
+                      model: "Edit Product",
+                      id: product._id,
+                    })
+                  }
+                >
+                  <AiTwotoneEdit className="text-green-700 text-lg" />
+                </Button>
+
+                {/* View */}
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  component={Link}
+                  to={`/product/${product._id}`}
+                  sx={{
+                    minWidth: 32,
+                    height: 32,
+                    p: 0,
+                    backgroundColor: "rgb(219 234 254)",
+                    "&:hover": {
+                      backgroundColor: "rgb(191 219 254)",
+                    },
+                  }}
+                >
+                  <IoMdEye className="text-blue-700 text-lg" />
+                </Button>
+
+                {/* Delete */}
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="error"
+                  sx={{
+                    minWidth: 32,
+                    height: 32,
+                    p: 0,
+                    backgroundColor: "rgb(254 226 226)",
+                    "&:hover": {
+                      backgroundColor: "rgb(254 202 202)",
+                    },
+                  }}
+                  onClick={() => handleDelete(product._id)}
+                >
+                  <MdOutlineDeleteOutline className="text-red-700 text-lg" />
+                </Button>
+              </div>
+            </td>
+          </tr>
+        ))
+      )}
+    </tbody>
+  </table>
+</div>
+
 
           <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
             <div className="w-full sm:w-auto">
@@ -710,121 +713,119 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        {/* Header */}
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-800">My Orders</h2>
-          <p className="text-sm text-gray-600">
-            There are{" "}
-            <span className="text-primary font-semibold">
-              {orderData?.length}
-            </span>{" "}
-            Orders in Total
-          </p>
-        </div>
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+  {/* Header */}
+  <div className="border-b border-gray-200 px-4 sm:px-6 py-4">
+    <h2 className="text-lg font-semibold text-gray-800">📦 My Orders</h2>
+    <p className="text-sm text-gray-600">
+      You have{" "}
+      <span className="text-primary font-semibold">
+        {orderData?.length}
+      </span>{" "}
+      orders in total.
+    </p>
+  </div>
 
-        {/* Orders Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-gray-600">
-            <thead className="bg-gray-50 text-xs text-gray-700 uppercase">
-              <tr>
-                <th className="px-6 py-3"></th>
-                <th className="px-6 py-3">Order ID</th>
-                <th className="px-6 py-3">Payment</th>
-                <th className="px-6 py-3">Name</th>
-                <th className="px-6 py-3">Phone</th>
-                <th className="px-6 py-3">Address</th>
-                <th className="px-6 py-3">Total</th>
-                <th className="px-6 py-3">Pincode</th>
-                <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Status</th>
-                <th className="px-6 py-3">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedData1.map((item, index) => {
-                const globalIndex = (currentPage1 - 1) * perPage1 + index;
-                return (
-                  <tr
-                    key={item._id}
-                    className="bg-white border-b hover:bg-gray-50 transition"
-                  >
-                    <td className="px-6 py-4">
-                      <Button
-                        onClick={() => handleTogglePopup(globalIndex)}
-                        className="w-10 h-10 min-w-10 rounded-full bg-gray-100 hover:bg-gray-200"
-                      >
-                        {openPopupIndex === globalIndex ? (
-                          <FaAngleUp className="text-gray-600 text-lg" />
-                        ) : (
-                          <FaAngleDown className="text-gray-600 text-lg" />
-                        )}
-                      </Button>
-                    </td>
-                    <td className="px-6 py-4 text-primary">{item._id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.PaymentId}
-                    </td>
-                    <td className="px-6 py-4">{context.userData?.name}</td>
-                    <td className="px-6 py-4">{item.deliver_address.Mobile}</td>
-                    <td className="px-6 py-4 w-[500px] whitespace-nowrap overflow-hidden text-ellipsis">
-                      {[
-                        item.deliver_address.Address_Type,
-                        item.deliver_address.Address_line,
-                        item.deliver_address.City,
-                        item.deliver_address.State,
-                        item.deliver_address.Country,
-                        item.deliver_address.landmark,
-                      ]
-                        .filter(Boolean)
-                        .join(", ")}
-                    </td>
-                    <td className="px-6 py-4 font-semibold text-primary">
-                      ${item.Total}
-                    </td>
-                    <td className="px-6 py-4">
-                      {item.deliver_address.Pincode}
-                    </td>
-                    <td className="px-6 py-4">{context.userData?.email}</td>
-                    <td className="px-6 py-4">
-                      <StatusBadge status={item.orderStatus} />
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
-            <div className="w-full sm:w-auto">
-              <label className="font-semibold text-[14px] mb-1 block">
-                Items Per Page
-              </label>
-              <Select
-                className="w-1/2 sm:w-[70px]"
-                size="small"
-                value={perPage1}
-                onChange={handleLimitChange1}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-              </Select>
-            </div>
+  {/* Table Container */}
+  <div className="overflow-x-auto">
+    <table className="min-w-[1000px] w-full text-sm text-gray-700">
+      <thead className="bg-gray-100 text-xs uppercase sticky top-0 z-10">
+        <tr>
+          <th className="px-4 py-3 text-left"></th>
+          <th className="px-4 py-3 text-left">Order ID</th>
+          <th className="px-4 py-3 text-left">Payment</th>
+          <th className="px-4 py-3 text-left">Name</th>
+          <th className="px-4 py-3 text-left">Phone</th>
+          <th className="px-4 py-3 text-left">Address</th>
+          <th className="px-4 py-3 text-left">Total</th>
+          <th className="px-4 py-3 text-left">Pincode</th>
+          <th className="px-4 py-3 text-left">Email</th>
+          <th className="px-4 py-3 text-left">Status</th>
+          <th className="px-4 py-3 text-left">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {paginatedData1.map((item, index) => {
+          const globalIndex = (currentPage1 - 1) * perPage1 + index;
+          const address = [
+            item.deliver_address.Address_Type,
+            item.deliver_address.Address_line,
+            item.deliver_address.City,
+            item.deliver_address.State,
+            item.deliver_address.Country,
+            item.deliver_address.landmark,
+          ]
+            .filter(Boolean)
+            .join(", ");
 
-            <Pagination
-              count={totalPages1}
-              page={currentPage1}
-              color="primary"
-              onChange={handlePageChange1}
-            />
-          </div>
-        </div>
-      </div>
+          return (
+            <tr
+              key={item._id}
+              className="border-b hover:bg-gray-50 transition duration-150"
+            >
+              <td className="px-4 py-3">
+                <Button
+                  onClick={() => handleTogglePopup(globalIndex)}
+                  className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200"
+                  aria-label="Toggle Details"
+                >
+                  {openPopupIndex === globalIndex ? (
+                    <FaAngleUp className="text-gray-600 text-lg" />
+                  ) : (
+                    <FaAngleDown className="text-gray-600 text-lg" />
+                  )}
+                </Button>
+              </td>
+              <td className="px-4 py-3 text-primary font-medium">{item._id}</td>
+              <td className="px-4 py-3">{item.PaymentId}</td>
+              <td className="px-4 py-3">{context.userData?.name}</td>
+              <td className="px-4 py-3">{item.deliver_address.Mobile}</td>
+              <td className="px-4 py-3 max-w-[300px] truncate">{address}</td>
+              <td className="px-4 py-3 font-semibold text-primary">${item.Total}</td>
+              <td className="px-4 py-3">{item.deliver_address.Pincode}</td>
+              <td className="px-4 py-3">{context.userData?.email}</td>
+              <td className="px-4 py-3">
+                <StatusBadge status={item.orderStatus} />
+              </td>
+              <td className="px-4 py-3">
+                {new Date(item.createdAt).toLocaleDateString()}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+  {/* Pagination & Controls */}
+  <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-4 gap-4 bg-gray-50">
+    <div className="w-full sm:w-auto">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Items Per Page
+      </label>
+      <Select
+        className="w-1/2 sm:w-[70px]"
+        size="small"
+        value={perPage1}
+        onChange={handleLimitChange1}
+      >
+        {[1, 5, 10, 20, 50].map((val) => (
+          <MenuItem key={val} value={val}>
+            {val}
+          </MenuItem>
+        ))}
+      </Select>
+    </div>
+
+    <Pagination
+      count={totalPages1}
+      page={currentPage1}
+      color="primary"
+      onChange={handlePageChange1}
+    />
+  </div>
+</div>
+
 
       {openPopupIndex !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -886,67 +887,71 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="card my-4 shadow-md sm:rounded-lg bg-white">
-        <div className="flex items-center justify-between px-5 py-5">
-          <h2 className="text-[18px] font-[600] ">Total Users & Total Sales</h2>
-        </div>
-        <div className="flex items-center justify-start gap-4 px-5 py-5 pt-0">
-          <span
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => setDisplayType("users")}
-          >
-            <span className="block w-[10px] h-[10px] rounded-full bg-green-600"></span>
-            <span>Total Users</span>
-          </span>
-          <span
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => setDisplayType("sales")}
-          >
-            <span className="block w-[10px] h-[10px] rounded-full bg-orange-600"></span>
-            <span>Total Sales</span>
-          </span>
-          <span
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => setDisplayType("both")}
-          >
-            <span className="block w-[10px] h-[10px] rounded-full bg-gray-600"></span>
-            <span>Both</span>
-          </span>
-        </div>
+<div className="card my-4 shadow-md sm:rounded-lg bg-white">
+  {/* Header */}
+  <div className="flex items-center justify-between px-4 sm:px-5 py-4 sm:py-5">
+    <h2 className="text-base sm:text-lg font-semibold text-gray-800">
+      Total Users & Total Sales
+    </h2>
+  </div>
 
-        {chartdata.length > 0 && displayType && (
-          <BarChart
-            width={1000}
-            height={500}
-            data={chartdata}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="none" />
-            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-            <YAxis tick={{ fontSize: 12 }} />
-            <Tooltip />
-            <Legend />
+  {/* Toggle Controls */}
+  <div className="flex flex-wrap items-center gap-4 px-4 sm:px-5 py-4 pt-0">
+    {[
+      { label: "Total Users", color: "bg-green-600", type: "users" },
+      { label: "Total Sales", color: "bg-orange-600", type: "sales" },
+      { label: "Both", color: "bg-gray-600", type: "both" },
+    ].map(({ label, color, type }) => (
+      <button
+        key={type}
+        onClick={() => setDisplayType(type)}
+        className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-primary transition"
+      >
+        <span className={`w-3 h-3 rounded-full ${color}`}></span>
+        <span>{label}</span>
+      </button>
+    ))}
+  </div>
 
-            {(displayType === "users" || displayType === "both") && (
-              <Bar
-                dataKey="TotalUsers"
-                fill="#16a34a"
-                barSize={30}
-                name="Total Users"
-              />
-            )}
+  {/* Chart */}
+  {chartdata.length > 0 && displayType && (
+    <div className="w-full overflow-x-auto px-4 sm:px-5 pb-5">
+      <div className="min-w-[600px]">
+        <BarChart
+          width={1000}
+          height={400}
+          data={chartdata}
+          margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="none" />
+          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+          <YAxis tick={{ fontSize: 12 }} />
+          <Tooltip />
+          <Legend />
 
-            {(displayType === "sales" || displayType === "both") && (
-              <Bar
-                dataKey="Totalsales"
-                fill="#ea580c"
-                barSize={30}
-                name="Total Sales"
-              />
-            )}
-          </BarChart>
-        )}
+          {(displayType === "users" || displayType === "both") && (
+            <Bar
+              dataKey="TotalUsers"
+              fill="#16a34a"
+              barSize={30}
+              name="Total Users"
+            />
+          )}
+          {(displayType === "sales" || displayType === "both") && (
+            <Bar
+              dataKey="Totalsales"
+              fill="#ea580c"
+              barSize={30}
+              name="Total Sales"
+            />
+          )}
+        </BarChart>
       </div>
-    </>
+    </div>
+  )}
+</div>
+
+      </>
+     
   );
 }

@@ -172,109 +172,104 @@ export default function AddSubCategory() {
   };
   return (
     <>
-      <section className="p-5 bg-gray-50 grid grid-cols-2 gap-10">
-        <form className="p-8 py-3 " onSubmit={handlesubmit}>
-          <h4 className="mb-5 font-[600] text-[20px]">Add Sub Category</h4>
-          <div className="grid grid-cols-2  mb-3 gap-4">
-            <div className="col ">
-              <h3 className="text-[16px] font-[600] mb-2">Product Category</h3>
-              <Select
-                labelId="demo-simple-select-label"
-                id="ProductCat"
-                value={Cat}
-                className="w-full bg-white !rounded-full h-[43px]"
-                label="Category"
-                onChange={handleChange}
-              >
-                {context.catData.length !== 0 &&
-                  context.catData.map((item) => {
-                    return (
-                      <MenuItem
-                        className="w-full bg-white !rounded-full h-[43px]"
-                        key={item._id}
-                        value={item._id}
-                        // onClick={selectedcatFun(item.name)}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </div>
-            <div className="col w-[full]">
-              <h3 className="text-[16px] font-[600] mb-2">Sub Category Name</h3>
-              <input
-                type="text"
-                name="name"
-                value={formfields.name}
-                onChange={onChangeInput}
-                className="w-full h-[35px] rounded-full p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-              />
-            </div>
-          </div>
+      <section className="p-4 sm:p-6 md:p-8 bg-gray-50 grid grid-cols-1 lg:grid-cols-2 gap-8">
+  {/* Add Sub Category Form */}
+  <form className="bg-white rounded-lg shadow-md p-4 sm:p-6" onSubmit={handlesubmit}>
+    <h4 className="mb-6 text-lg sm:text-xl font-semibold text-gray-800">Add Sub Category</h4>
 
-          <Button
-            type="submit"
-            className="!bg-primary !text-white items-center mt-4 w-full !pr-2 gap-2 !pl-12"
-          >
-            <IoMdCloudUpload className="text-[25px] " /> Publish Sub Category
-            {isLoading && <CircularProgress color="inherit" size={20} />}
-          </Button>
-        </form>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      {/* Category Select */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Product Category</label>
+        <Select
+          id="ProductCat"
+          value={Cat}
+          onChange={handleChange}
+          className="w-full bg-white rounded-full h-[43px]"
+        >
+          {context.catData.map((item) => (
+            <MenuItem key={item._id} value={item._id}>
+              {item.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
 
-        <form className="p-8 py-3 " onSubmit={handlesubmitThird}>
-          <h4 className="mb-5 font-[600] text-[20px]">
-            Add Third Level Category
-          </h4>
-          <div className="grid grid-cols-2  mb-3 gap-4">
-            <div className="col ">
-              <h3 className="text-[16px] font-[600] mb-2">Product Category</h3>
-              <Select
-                labelId="demo-simple-select-label"
-                id="ProductCat"
-                value={Cat2}
-                className="w-full bg-white !rounded-full h-[43px]"
-                label="Category"
-                onChange={handleChange2}
-              >
-                {context.catData.length !== 0 &&
-                  context.catData.map((item) => {
-                    if (!Array.isArray(item.children)) return null;
+      {/* Subcategory Name */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Sub Category Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formfields.name}
+          onChange={onChangeInput}
+          placeholder="Enter subcategory name"
+          className="w-full h-[43px] rounded-full px-4 border border-gray-300 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+    </div>
 
-                    return item.children.map((child) => (
-                      <MenuItem
-                        className="w-full bg-white !rounded-full h-[43px]"
-                        key={child._id}
-                        value={child._id}
-                      >
-                        {child.name}
-                      </MenuItem>
-                    ));
-                  })}
-              </Select>
-            </div>
-            <div className="col w-[full]">
-              <h3 className="text-[16px] font-[600] mb-2">Sub Category Name</h3>
-              <input
-                type="text"
-                name="name"
-                value={formfields2.name}
-                onChange={onChangeInput2}
-                className="w-full h-[35px] rounded-full p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-              />
-            </div>
-          </div>
+    <Button
+      type="submit"
+      className="w-full !bg-blue-600 hover:bg-blue-700 !text-white font-semibold py-2 px-4 rounded-full flex items-center justify-center gap-2"
+    >
+      <IoMdCloudUpload className="text-xl" />
+      Publish Sub Category
+      {isLoading && <CircularProgress color="inherit" size={20} />}
+    </Button>
+  </form>
 
-          <Button
-            type="submit"
-            className="!bg-primary !text-white items-center mt-4 w-full !pr-2 gap-2 !pl-12"
-          >
-            <IoMdCloudUpload className="text-[25px] " /> Publish Third Level
-            Category
-            {isLoading2 && <CircularProgress color="inherit" size={20} />}
-          </Button>
-        </form>
-      </section>
+  {/* Add Third Level Category Form */}
+  <form className="bg-white rounded-lg shadow-md p-4 sm:p-6" onSubmit={handlesubmitThird}>
+    <h4 className="mb-6 text-lg sm:text-xl font-semibold text-gray-800">Add Third Level Category</h4>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      {/* Subcategory Select */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Product Sub Category</label>
+        <Select
+          id="ProductSubCat"
+          value={Cat2}
+          onChange={handleChange2}
+          className="w-full bg-white rounded-full h-[43px]"
+        >
+          {context.catData.flatMap((item) =>
+            Array.isArray(item.children)
+              ? item.children.map((child) => (
+                  <MenuItem key={child._id} value={child._id}>
+                    {child.name}
+                  </MenuItem>
+                ))
+              : []
+          )}
+        </Select>
+      </div>
+
+      {/* Third Level Name */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Third Level Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formfields2.name}
+          onChange={onChangeInput2}
+          placeholder="Enter third level name"
+          className="w-full h-[43px] rounded-full px-4 border border-gray-300 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+    </div>
+
+    <Button
+      type="submit"
+      className="w-full !bg-blue-600 hover:bg-blue-700 !text-white font-semibold py-2 px-4 rounded-full flex items-center justify-center gap-2"
+    >
+      <IoMdCloudUpload className="text-xl" />
+      Publish Third Level Category
+      {isLoading2 && <CircularProgress color="inherit" size={20} />}
+    </Button>
+  </form>
+</section>
+
     </>
   );
 }

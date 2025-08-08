@@ -108,215 +108,172 @@ export default function Orders() {
 
   return (
     <div className="card my-4 shadow-md sm:rounded-lg bg-white">
-      <div className="flex items-center justify-between px-5 py-5">
-        <h1 className="text-[18px] pt-2 font-[600]"> Recent Orders</h1>
-        <div className="w-[40%] flex justify-between items-center  pt-7 ">
-          <Searchbox
-            search={search}
-            setSearch={setSearch}
-            setPerPage1={setPerPage1}
-          />
-        </div>
-      </div>
-      <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        {/* Header */}
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-800">My Orders</h2>
-          <p className="text-sm text-gray-600">
-            There are{" "}
-            <span className="text-primary font-semibold">
-              {orderData?.length}
-            </span>{" "}
-            Orders in Total
-          </p>
-        </div>
-
-        {/* Orders Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left text-gray-600">
-            <thead className="bg-gray-50 text-xs text-gray-700 uppercase">
-              <tr>
-                <th className="px-6 py-3"></th>
-                <th className="px-6 py-3">Order ID</th>
-                <th className="px-6 py-3">Payment</th>
-                <th className="px-6 py-3">Name</th>
-                <th className="px-6 py-3">Phone</th>
-                <th className="px-6 py-3">Address</th>
-                <th className="px-6 py-3">Total</th>
-                <th className="px-6 py-3">Pincode</th>
-                <th className="px-6 py-3">Email</th>
-                <th className="px-6 py-3">Status</th>
-                <th className="px-6 py-3">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedData1.map((item, index) => {
-                const globalIndex = (currentPage1 - 1) * perPage1 + index;
-                return (
-                  <tr
-                    key={item._id}
-                    className="bg-white border-b hover:bg-gray-50 transition"
-                  >
-                    <td className="px-6 py-4">
-                      <Button
-                        onClick={() => handleTogglePopup(globalIndex)}
-                        className="w-10 h-10 min-w-10 rounded-full bg-gray-100 hover:bg-gray-200"
-                      >
-                        {openPopupIndex === globalIndex ? (
-                          <FaAngleUp className="text-gray-600 text-lg" />
-                        ) : (
-                          <FaAngleDown className="text-gray-600 text-lg" />
-                        )}
-                      </Button>
-                    </td>
-                    <td className="px-6 py-4 text-primary">{item._id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.PaymentId}
-                    </td>
-                    <td className="px-6 py-4">{context.userData?.name}</td>
-                    <td className="px-6 py-4">{item.deliver_address.Mobile}</td>
-                    <td className="px-6 py-4 w-[500px] whitespace-nowrap overflow-hidden text-ellipsis">
-                      {[
-                        item.deliver_address.Address_Type,
-                        item.deliver_address.Address_line,
-                        item.deliver_address.City,
-                        item.deliver_address.State,
-                        item.deliver_address.Country,
-                        item.deliver_address.landmark,
-                      ]
-                        .filter(Boolean)
-                        .join(", ")}
-                    </td>
-
-                    <td className="px-6 py-4  font-semibold  !text-primary">
-                      ${item.Total}
-                    </td>
-                    <td className="px-6 py-4">
-                      {item.deliver_address.Pincode}
-                    </td>
-                    <td className="px-6 py-4">{context.userData.email}</td>
-                    <td className="px-6 py-4">
-                      <FormControl
-                        variant="standard"
-                        sx={{ m: 1, minWidth: 120 }}
-                      >
-                        <InputLabel id={`status-label-${item._id}`}>
-                          Status
-                        </InputLabel>
-                        <Select
-                          labelId={`status-label-${item._id}`}
-                          id={`status-select-${item._id}`}
-                          value={item.orderStatus || orderStatus}
-                          onChange={(event) => handleChange(event, item._id)}
-                        >
-                          <MenuItem value="pending">
-                            <span style={{ color: "#f97316" }}>Pending</span>
-                          </MenuItem>
-                          <MenuItem value="Confirmed">
-                            <span style={{ color: "#22c55e" }}>Confirmed</span>
-                          </MenuItem>
-                          <MenuItem value="Canceled">
-                            <span style={{ color: "#ef4444" }}>Canceled</span>
-                          </MenuItem>
-                        </Select>
-                      </FormControl>
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
-            <div className="w-full sm:w-auto">
-              <label className="font-semibold text-[14px] mb-1 block">
-                Items Per Page
-              </label>
-              <Select
-                className="w-1/2 sm:w-[70px]"
-                size="small"
-                value={perPage1}
-                onChange={handleLimitChange1}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-              </Select>
-            </div>
-
-            <Pagination
-              count={totalPages1}
-              page={currentPage1}
-              color="primary"
-              onChange={handlePageChange1}
-            />
-          </div>
-        </div>
-      </div>
-
-      {openPopupIndex !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-xl shadow-xl w-[90%] max-w-5xl relative">
-            <button
-              className="absolute top-3 right-4 text-2xl text-gray-400 hover:text-red-500"
-              onClick={() => setOpenPopupIndex(null)}
-            >
-              ×
-            </button>
-            <h3 className="text-lg font-bold mb-5 text-gray-800">
-              Order Details
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left text-gray-700">
-                <thead className="bg-gray-100 text-xs uppercase text-gray-600">
-                  <tr>
-                    <th className="px-6 py-3">ID</th>
-                    <th className="px-6 py-3">Title</th>
-                    <th className="px-6 py-3">Image</th>
-                    <th className="px-6 py-3">Quantity</th>
-                    <th className="px-6 py-3">Price</th>
-                    <th className="px-6 py-3">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orderData[openPopupIndex]?.products?.map((product, idx) => (
-                    <tr
-                      key={idx}
-                      className="bg-white border-b hover:bg-gray-50 transition"
-                    >
-                      <td className="px-6 py-4 text-primary">
-                        {product.productId?._id}
-                      </td>
-                      <td className="px-6 py-4">
-                        {product.productId?.name || "N/A"}
-                      </td>
-                      <td className="px-6 py-4">
-                        <img
-                          src={
-                            product?.productId?.images?.[0]?.url ||
-                            "https://via.placeholder.com/50"
-                          }
-                          className="w-[50px] h-[60px] object-cover rounded-md border"
-                          alt="product"
-                        />
-                      </td>
-                      <td className="px-6 py-4">{product.quantity}</td>
-                      <td className="px-6 py-4">${product.price}</td>
-                      <td className="px-6 py-4 font-semibold text-primary">
-                        ${product.SubTotal}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
+  {/* Header */}
+  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-5 py-5 gap-4">
+    <h1 className="text-lg font-semibold text-gray-800">Recent Orders</h1>
+    <div className="w-full sm:w-[60%]">
+      <Searchbox search={search} setSearch={setSearch} setPerPage1={setPerPage1} />
     </div>
+  </div>
+
+  {/* Orders Summary */}
+  <div className="border-b border-gray-200 px-6 py-4">
+    <h2 className="text-lg font-semibold text-gray-800">My Orders</h2>
+    <p className="text-sm text-gray-600">
+      There are{" "}
+      <span className="text-primary font-semibold">{orderData?.length}</span> Orders in Total
+    </p>
+  </div>
+
+  {/* Orders Table */}
+  <div className="overflow-x-auto">
+    <table className="min-w-full text-sm text-left text-gray-600">
+      <thead className="bg-gray-50 text-xs text-gray-700 uppercase">
+        <tr>
+          <th className="px-6 py-3"></th>
+          <th className="px-6 py-3">Order ID</th>
+          <th className="px-6 py-3">Payment</th>
+          <th className="px-6 py-3">Name</th>
+          <th className="px-6 py-3">Phone</th>
+          <th className="px-6 py-3">Address</th>
+          <th className="px-6 py-3">Total</th>
+          <th className="px-6 py-3">Pincode</th>
+          <th className="px-6 py-3">Email</th>
+          <th className="px-6 py-3">Status</th>
+          <th className="px-6 py-3">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {paginatedData1.map((item, index) => {
+          const globalIndex = (currentPage1 - 1) * perPage1 + index;
+          return (
+            <tr key={item._id} className="bg-white border-b hover:bg-gray-50 transition">
+              <td className="px-6 py-4">
+                <Button
+                  onClick={() => handleTogglePopup(globalIndex)}
+                  className="w-10 h-10 min-w-10 rounded-full bg-gray-100 hover:bg-gray-200"
+                >
+                  {openPopupIndex === globalIndex ? (
+                    <FaAngleUp className="text-gray-600 text-lg" />
+                  ) : (
+                    <FaAngleDown className="text-gray-600 text-lg" />
+                  )}
+                </Button>
+              </td>
+              <td className="px-6 py-4 text-primary">{item._id}</td>
+              <td className="px-6 py-4">{item.PaymentId}</td>
+              <td className="px-6 py-4">{context.userData?.name}</td>
+              <td className="px-6 py-4">{item.deliver_address.Mobile}</td>
+              <td className="px-6 py-4 max-w-[300px] truncate">
+                {[
+                  item.deliver_address.Address_Type,
+                  item.deliver_address.Address_line,
+                  item.deliver_address.City,
+                  item.deliver_address.State,
+                  item.deliver_address.Country,
+                  item.deliver_address.landmark,
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
+              </td>
+              <td className="px-6 py-4 font-semibold text-primary">${item.Total}</td>
+              <td className="px-6 py-4">{item.deliver_address.Pincode}</td>
+              <td className="px-6 py-4">{context.userData?.email}</td>
+              <td className="px-6 py-4">
+                <FormControl variant="standard" sx={{ minWidth: 120 }}>
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={item.orderStatus || orderStatus}
+                    onChange={(event) => handleChange(event, item._id)}
+                  >
+                    <MenuItem value="pending">
+                      <span style={{ color: "#f97316" }}>Pending</span>
+                    </MenuItem>
+                    <MenuItem value="Confirmed">
+                      <span style={{ color: "#22c55e" }}>Confirmed</span>
+                    </MenuItem>
+                    <MenuItem value="Canceled">
+                      <span style={{ color: "#ef4444" }}>Canceled</span>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </td>
+              <td className="px-6 py-4">{new Date(item.createdAt).toLocaleDateString()}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+
+    {/* Pagination Controls */}
+    <div className="flex justify-between items-center px-4 sm:px-6 py-4 border-t border-gray-200">
+    <div className="flex items-center gap-2">
+        <label className="font-semibold text-sm mb-1 block">Items Per Page</label>
+        <Select
+          className="w-full sm:w-[80px]"
+          size="small"
+          value={perPage1}
+          onChange={handleLimitChange1}
+        >
+          {[1, 5, 10, 20, 50].map((num) => (
+            <MenuItem key={num} value={num}>{num}</MenuItem>
+          ))}
+        </Select>
+      </div>
+      <Pagination
+        count={totalPages1}
+        page={currentPage1}
+        color="primary"
+        onChange={handlePageChange1}
+      />
+    </div>
+  </div>
+
+  {/* Popup Modal */}
+  {openPopupIndex !== null && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-5xl relative overflow-auto max-h-[90vh]">
+        <button
+          className="absolute top-3 right-4 text-2xl text-gray-400 hover:text-red-500"
+          onClick={() => setOpenPopupIndex(null)}
+        >
+          ×
+        </button>
+        <h3 className="text-lg font-bold mb-5 text-gray-800">Order Details</h3>
+        <table className="min-w-full text-sm text-left text-gray-700">
+          <thead className="bg-gray-100 text-xs uppercase text-gray-600">
+            <tr>
+              <th className="px-6 py-3">ID</th>
+              <th className="px-6 py-3">Title</th>
+              <th className="px-6 py-3">Image</th>
+              <th className="px-6 py-3">Quantity</th>
+              <th className="px-6 py-3">Price</th>
+              <th className="px-6 py-3">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderData[openPopupIndex]?.products?.map((product, idx) => (
+              <tr key={idx} className="bg-white border-b hover:bg-gray-50 transition">
+                <td className="px-6 py-4 text-primary">{product.productId?._id}</td>
+                <td className="px-6 py-4">{product.productId?.name || "N/A"}</td>
+                <td className="px-6 py-4">
+                  <img
+                    src={product?.productId?.images?.[0]?.url || "https://via.placeholder.com/50"}
+                    className="w-[50px] h-[60px] object-cover rounded-md border"
+                    alt="product"
+                  />
+                </td>
+                <td className="px-6 py-4">{product.quantity}</td>
+                <td className="px-6 py-4">${product.price}</td>
+                <td className="px-6 py-4 font-semibold text-primary">${product.SubTotal}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+</div>
+
   );
 }

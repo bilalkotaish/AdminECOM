@@ -84,118 +84,110 @@ export default function Users() {
 
   return (
     <>
-      <div className="card my-3 shadow-md sm:rounded-lg bg-white">
-        <div className="flex items-center w-full pl-4 justify-between pr-6">
-          <h1 className="text-[25px] pt-4 font-[600]">Users List</h1>
-          <div className="col w-[30%] ml-auto">
-            <Searchbox
-              setSearch={setSearch}
-              Search={search}
-              setPerPage1={setUsersPerPage}
-            />
-          </div>
-        </div>
+     <div className="bg-white shadow-md rounded-lg overflow-hidden my-6">
+  {/* Header */}
+  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-6 py-4 gap-4">
+    <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">Users List</h1>
+    <div className="w-full sm:w-[300px]">
+      <Searchbox
+        setSearch={setSearch}
+        Search={search}
+        setPerPage1={setUsersPerPage}
+      />
+    </div>
+  </div>
 
-        <div className="mt-5">
-          <table className="table-auto w-full text-sm text-left text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 pl-8">User Image</th>
-                <th className="px-4 py-3">User Name</th>
-                <th className="px-4 py-3">User Email</th>
-                <th className="px-4 py-3">Email Verification</th>
-                <th className="px-4 py-3">User Phone</th>
-                <th className="px-4 py-3">Created At</th>
-              </tr>
-            </thead>
+  {/* Table */}
+  <div className="overflow-x-auto">
+    <table className="min-w-[700px] w-full text-sm text-left text-gray-700">
+      <thead className="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th className="px-6 py-3">Avatar</th>
+          <th className="px-6 py-3">Name</th>
+          <th className="px-6 py-3">Email</th>
+          <th className="px-6 py-3">Verified</th>
+          <th className="px-6 py-3">Phone</th>
+          <th className="px-6 py-3">Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentUsers.map((user, index) => (
+          <tr key={user._id || index} className="border-b hover:bg-gray-50 transition">
+            <td className="px-6 py-4">
+              <img
+                src={
+                  user.Avatar && user.Avatar !== ""
+                    ? user.Avatar
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_8kVrRKvn48kDPt79Je7wZIuT6nUSr3l5DQ&s"
+                }
+                alt={user.name}
+                className="w-10 h-10 rounded-full object-cover border border-gray-300"
+              />
+            </td>
+            <td className="px-6 py-4 font-medium text-gray-900">{user.name}</td>
+            <td className="px-6 py-4 flex items-center gap-2 text-gray-700">
+              <MdOutlineMarkEmailRead className="text-blue-500" />
+              {user.email}
+            </td>
+            <td className="px-6 py-4">
+              {user.Verify_email ? (
+                <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                  Verified
+                </span>
+              ) : (
+                <span className="inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">
+                  Not Verified
+                </span>
+              )}
+            </td>
+            <td className="px-6 py-4 flex items-center gap-2 text-gray-700">
+              <MdOutlinePhone className="text-gray-500" />
+              {user.Mobile || "N/A"}
+            </td>
+            <td className="px-6 py-4 text-gray-700 whitespace-nowrap">
+  {user.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "N/A"}
+</td>
 
-            <tbody>
-              {currentUsers.map((user, index) => (
-                <tr
-                  key={user._id || index}
-                  className="bg-white border-b border-gray-200"
-                >
-                  <td className="px-4 py-3 pl-8">
-                    <div className="flex items-center gap-4 max-w-[300px]">
-                      <div className="w-[45px] h-[45px] overflow-hidden rounded-md">
-                        <img
-                          src={
-                            user.Avatar && user.Avatar !== ""
-                              ? user.Avatar
-                              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_8kVrRKvn48kDPt79Je7wZIuT6nUSr3l5DQ&s"
-                          }
-                          className="w-full h-full object-cover"
-                          alt={user.name}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">{user.name}</span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">
-                      <MdOutlineMarkEmailRead />
-                      {user.email}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">
-                      {user.Verify_email ? (
-                        <span className="bg-green-500 text-white rounded-full px-3 py-1">
-                          Verified
-                        </span>
-                      ) : (
-                        <span className="bg-red-500 text-white rounded-full px-3 py-1">
-                          Not Verified
-                        </span>
-                      )}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">
-                      <MdOutlinePhone />
-                      {user.Mobile || "N/A"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">
-                      <SlCalender />
-                      {user.createdAt
-                        ? new Date(user.createdAt).toLocaleDateString("en-GB")
-                        : "N/A"}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-4 mb-4 px-4">
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium">Users per page:</label>
-            <select
-              value={usersPerPage}
-              onChange={handleItemsPerPageChange}
-              className="border border-gray-300 rounded px-2 py-1 text-sm"
-            >
-              <option value={1}>1</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
+  <div className="flex justify-between items-center px-4 sm:px-6 py-4 border-t border-gray-200">
+  <div className="flex items-center gap-3">
+      <label className="text-sm font-medium text-gray-700">Users per page:</label>
+      <select
+        value={usersPerPage}
+        onChange={handleItemsPerPageChange}
+        className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+      >
+        {[1, 5, 10, 25, 50].map((num) => (
+          <option key={num} value={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+    </div>
 
-          <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handlePageChange}
-            color="primary"
-          />
-        </div>
-      </div>
+    <Pagination
+      count={totalPages}
+      page={currentPage}
+      onChange={handlePageChange}
+      color="primary"
+      shape="rounded"
+      size="medium"
+      className="[&_.MuiPaginationItem-root]:rounded-md"
+    />
+  </div>
+</div>
+
     </>
   );
 }

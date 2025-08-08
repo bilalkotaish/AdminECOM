@@ -124,7 +124,7 @@ export default function Signup() {
   };
   return (
     <section className="relative bg-white loginsection">
-      <header className="w-full fixed z-50 !top-0 !left-0 px-4 py-2 flex !items-center !justify-between">
+      <header className="w-full  lg:fixed z-50 !top-0 !left-0 px-4 py-2 flex !items-center !justify-center md:!justify-between">
         <Link to="/">
           <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
             <rect width="100%" height="100%" fill="white" />
@@ -143,7 +143,7 @@ export default function Signup() {
           </svg>
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className=" hidden md:flex items-center gap-4">
           <NavLink to="/login" exact={true} activeClassName="isActive">
             <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] !px-5 gap-2">
               <CgLogIn className="!text-[20px]" /> Login
@@ -161,8 +161,8 @@ export default function Signup() {
         className="absolute w-full h-full top-0 left-0 object-cover opacity-30 z-10"
       />
 
-      <div className="loginbox card w-[550px] h-[auto] pt-56 pb-20 mx-auto pt-2 relative z-50   ">
-        <h1 className="text-center text-[35px] font-[700]">
+      <div className="loginbox card w-[90%] md:w-[550px] h-[auto] pt-0 lg:pt-56 pb-20 mx-auto pt-2 relative z-50   ">
+        <h1 className="text-center text-[20px] sm:text-[35px] font-[700]">
           {" "}
           Join Us Now!
           <br />
@@ -185,7 +185,7 @@ export default function Signup() {
 
         <div className="w-full flex items-center justify-center gap-3">
           <span className="flex items-center w-[100px] h-[2px] bg-slate-300"></span>
-          <span className="text-[13px]"> Or Sign Up With Your Email</span>
+          <span className="text-[10px] sm:text-[13px]"> Or Sign Up With Your Email</span>
           <span className="flex items-center w-[100px] h-[2px] bg-slate-300"></span>
         </div>
 
@@ -249,17 +249,17 @@ export default function Signup() {
             <Button
               type="submit"
               disabled={!validValue}
-              className="btn-org w-full gap-3"
+              className="!bg-black !text-white w-full gap-3"
             >
               Sign Up
               {isLoading === true ? <CircularProgress color="inherit" /> : ""}
             </Button>
           </div>
-          <h2 className="text-[13px]  text-gray-700 cursor-pointer pt-3">
+          <h2 className="text-[13px] justify-between flex  text-gray-700 cursor-pointer pt-3">
             Already Have An Account?
             <Link
               to="/login"
-              className="link text-[13px]  text-gray-700 cursor-pointer"
+              className="link text-[13px]  text-gray-700 underline cursor-pointer"
             >
               Login Now
             </Link>

@@ -219,9 +219,7 @@ export default function Product() {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-2 mt-4">
         <h1 className="text-xl font-semibold mb-2 md:mb-0">Products</h1>
         <div className="flex flex-wrap gap-2 w-full md:w-auto">
-          <Button className="flex items-center gap-2 !bg-green-500 hover:!bg-green-600 !text-white font-semibold py-2 px-4 rounded-md">
-            Export <BiExport className="text-lg" />
-          </Button>
+         
           <Button
             onClick={() =>
               context.setisOpenPanel({ open: true, model: "Add Product" })
@@ -331,166 +329,163 @@ export default function Product() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-sm text-left text-gray-600">
-            <thead className="bg-gray-100 text-xs text-gray-700 uppercase">
-              <tr>
-                <th className="px-4 py-3">
-                  <Checkbox
-                    size="small"
-                    {...label}
-                    onChange={handleSelectAll}
-                    checked={
-                      product.length !== 0
-                        ? product.every((item) => item.checked)
-                        : false
-                    }
+        <div className="overflow-x-auto rounded-lg shadow-sm bg-white">
+  <table className="min-w-[1000px] w-full text-sm text-left text-gray-700">
+    <thead className="bg-gray-100 text-xs uppercase text-gray-600">
+      <tr>
+        <th className="px-4 py-3">
+          <Checkbox
+            size="small"
+            {...label}
+            onChange={handleSelectAll}
+            checked={
+              product.length !== 0
+                ? product.every((item) => item.checked)
+                : false
+            }
+          />
+        </th>
+        <th className="px-4 py-3">Product</th>
+        <th className="px-4 py-3">Category</th>
+        <th className="px-4 py-3">Subcategory</th>
+        <th className="px-4 py-3">Brand</th>
+        <th className="px-4 py-3">Price</th>
+        <th className="px-4 py-3">Sales</th>
+        <th className="px-4 py-3">Rating</th>
+        <th className="px-4 py-3">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {loading ? (
+        <tr>
+          <td colSpan={9} className="text-center py-6">
+            <CircularProgress color="inherit" size={24} />
+          </td>
+        </tr>
+      ) : product.length === 0 ? (
+        <tr>
+          <td colSpan={9} className="text-center py-6 text-gray-500">
+            No products found for this category.
+          </td>
+        </tr>
+      ) : (
+        product.map((product) => (
+          <tr key={product._id} className="border-b hover:bg-gray-50 transition">
+            <td className="px-4 py-3">
+              <Checkbox
+                {...label}
+                checked={product.checked === true}
+                onChange={(e) => handlecheckboxChange(e, product._id)}
+                size="small"
+              />
+            </td>
+
+            <td className="px-4 py-3">
+              <div className="flex items-start gap-4 max-w-md">
+                <Link
+                  to={`/product/${product._id}`}
+                  className="w-[60px] h-[60px] flex-shrink-0 rounded-lg overflow-hidden border border-gray-200"
+                >
+                  <LazyLoadImage
+                    alt={product.name || "product"}
+                    effect="blur"
+                    className="w-full h-full object-cover"
+                    src={product.images?.[0]?.url || "/placeholder.jpg"}
                   />
-                </th>
-                <th className="px-4 py-3">Product</th>
-                <th className="px-4 py-3">Category</th>
-                <th className="px-4 py-3">Subcategory</th>
-                <th className="px-4 py-3">Brand</th>
-                <th className="px-4 py-3">Price</th>
-                <th className="px-1 py-2">Sales</th>
-                <th className="px-1 py-2">Rating</th>
-                <th className="px-4 py-3">Actions</th>
-              </tr>
-            </thead>
-            {Array.isArray(product) && product.length === 0 && (
-              <p className="!text-sm !items-center text-center text-gray-500 my-4">
-                No products found for this category.
-              </p>
-            )}
+                </Link>
+                <div className="flex flex-col">
+                  <Link to={`/product/${product._id}`}>
+                    <h3 className="text-xs font-semibold hover:text-primary line-clamp-2">
+                      {product.description || "N/A"}
+                    </h3>
+                  </Link>
+                  <span className="text-xs text-gray-500 font-semibold">
+                    {product.name}
+                  </span>
+                </div>
+              </div>
+            </td>
 
-            <tbody>
-              {loading === false ? (
-                product.length !== 0 &&
-                product.map((product) => (
-                  <tr
-                    key={product._id}
-                    className="bg-white border-b hover:bg-gray-50"
+            <td className="px-4 py-3">{product.category?.name || "—"}</td>
+            <td className="px-4 py-3">{product.subcatname || "—"}</td>
+            <td className="px-4 py-3">{product.brand || "—"}</td>
+
+            <td className="px-4 py-3">
+              <div className="flex flex-col">
+                <span className="line-through text-gray-400 text-xs">
+                  ${product.oldprice || "0.00"}
+                </span>
+                <span className="text-green-600 font-bold text-sm">
+                  ${product.price || "0.00"}
+                </span>
+              </div>
+            </td>
+
+            <td className="px-4 py-3">
+              <span className="font-semibold text-sm">{product.sale} Sales</span>
+              <ProgressBar type="warning" value={product.sale} />
+            </td>
+
+            <td className="px-4 py-3">
+              <Rating
+                name="half-rating-read"
+                defaultValue={product.rating}
+                precision={0.5}
+                readOnly
+              />
+            </td>
+
+            <td className="px-4 py-3">
+              <div className="flex gap-2">
+                <Tooltip title="Edit" placement="top" arrow>
+                  <Button
+                    className="!min-w-[32px] !h-8 !p-0 bg-green-100 hover:bg-green-200 rounded"
+                    variant="text"
+                    onClick={() =>
+                      context.setisOpenPanel({
+                        open: true,
+                        model: "Edit Product",
+                        id: product._id,
+                      })
+                    }
                   >
-                    <td className="px-4 py-3">
-                      <Checkbox
-                        {...label}
-                        checked={product.checked === true}
-                        onChange={(e) => handlecheckboxChange(e, product._id)}
-                        size="small"
-                      />
-                    </td>
+                    <AiTwotoneEdit className="text-green-700 text-base" />
+                  </Button>
+                </Tooltip>
 
-                    <td className="px-4 py-3">
-                      <div className="flex items-start gap-4 max-w-md">
-                        <Link
-                          to={`/product/${product._id}`}
-                          className="w-[60px] h-[60px] flex-shrink-0 rounded-lg overflow-hidden border border-gray-200"
-                        >
-                          <LazyLoadImage
-                            alt={product.name || "product"}
-                            effect="blur"
-                            className="w-full h-full object-cover"
-                            src={product.images?.[0]?.url || "/placeholder.jpg"}
-                          />
-                        </Link>
-                        <div className="flex flex-col">
-                          <Link to={`/product/${product._id}`}>
-                            <h3 className="!text-[12px] font-semibold hover:text-primary line-clamp-2">
-                              {product.description || "N/A"}
-                            </h3>
-                          </Link>
-                          <span className="text-xs text-gray-500 font-[600]">
-                            {product.name}
-                          </span>
-                        </div>
-                      </div>
-                    </td>
+                <Tooltip title="View" placement="top" arrow>
+                  <Link to={`/product/${product._id}`}>
+                    <Button
+                      className="!min-w-[32px] !h-8 !p-0 bg-blue-100 hover:bg-blue-200 rounded"
+                      variant="text"
+                    >
+                      <IoMdEye className="text-blue-700 text-base" />
+                    </Button>
+                  </Link>
+                </Tooltip>
 
-                    <td className="px-4 py-3">{product.category.name}</td>
-                    <td className="px-4 py-3">{product.subcatname}</td>
-                    <td className="px-4 py-3">{product.brand}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-col">
-                        <span className="line-through text-gray-400 text-xs">
-                          ${product.oldprice || "0.00"}
-                        </span>
-                        <span className="text-green-600 font-bold text-sm">
-                          ${product.price || "0.00"}
-                        </span>
-                      </div>
-                    </td>
+                <Tooltip title="Delete" placement="top" arrow>
+                  <Button
+                    className="!min-w-[32px] !h-8 !p-0 bg-red-100 hover:bg-red-200 rounded"
+                    variant="text"
+                    onClick={() => handleDelete(product._id)}
+                  >
+                    <MdOutlineDeleteOutline className="text-red-700 text-base" />
+                  </Button>
+                </Tooltip>
+              </div>
+            </td>
+          </tr>
+        ))
+      )}
+    </tbody>
+  </table>
+</div>
 
-                    <td className="px-1 py-1">
-                      <span className="font-semibold text-sm">
-                        {product.sale} Sales
-                      </span>
-                      <ProgressBar type="warning" value={product.sale} />
-                    </td>
-                    <td className="px-1 py-1">
-                      <Rating
-                        name="half-rating-read"
-                        defaultValue={product.rating}
-                        precision={0.5}
-                        readOnly
-                      />
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex gap-2">
-                        <Tooltip title="Edit" placement="top" arrow>
-                          <Button
-                            className="!min-w-[32px] !h-8 !p-0 bg-green-100 hover:bg-green-200 rounded"
-                            variant="text"
-                          >
-                            <AiTwotoneEdit
-                              onClick={() =>
-                                context.setisOpenPanel({
-                                  open: true,
-                                  model: "Edit Product",
-                                  id: product._id,
-                                })
-                              }
-                              className="text-green-700 text-base"
-                            />
-                          </Button>
-                        </Tooltip>
 
-                        <Tooltip title="View" placement="top" arrow>
-                          <Link to={`/product/${product._id}`}>
-                            <Button
-                              className="!min-w-[32px] !h-8 !p-0 bg-red-100 hover:bg-blue-200 rounded"
-                              variant="text"
-                            >
-                              <IoMdEye className="text-blue-700 text-base" />
-                            </Button>
-                          </Link>
-                        </Tooltip>
-
-                        <Tooltip title="Delete" placement="top" arrow>
-                          <Button
-                            className="!min-w-[32px] !h-8 !p-0 bg-red-100 hover:bg-red-200 rounded"
-                            variant="text"
-                            onClick={() => handleDelete(product._id)}
-                          >
-                            <MdOutlineDeleteOutline className="text-red-700 text-base" />
-                          </Button>
-                        </Tooltip>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={8} className="text-center py-6">
-                    <CircularProgress color="inherit" size={24} />
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 gap-4">
-          <div className="w-full sm:w-auto">
+<div className="flex justify-between items-center px-3 sm:px-6 py-4 border-t border-gray-200">
+<div className="flex items-center gap-3">
             <label className="font-semibold text-[14px] mb-1 block">
               Items Per Page
             </label>

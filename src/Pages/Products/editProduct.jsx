@@ -330,387 +330,361 @@ export default function EditProduct() {
   };
   return (
     <>
-      <section className="p-5 bg-gray-50">
-        <form className="p-8 py-3 " onSubmit={handlesubmit}>
-          <div className="scroll max-h-[70vh] pr-4 overflow-y-scroll">
-            <div className="grid grid-cols-1 mb-3 gap-4">
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Name</h3>
-                <input
-                  type="text"
-                  name="name"
-                  value={formfields.name}
-                  onChange={onChangeInput}
-                  className="w-full h-[35px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 mb-3 gap-4">
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Description
-                </h3>
-                <textarea
-                  type="text"
-                  name="description"
-                  value={formfields.description}
-                  onChange={onChangeInput}
-                  className="w-full h-[100px]  rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4">
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Category
-                </h3>
-                {context.catData.length !== 0 && (
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="ProductCat"
-                    name="productCat"
-                    value={Cat}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    label="Category"
-                    onChange={handleChange}
-                  >
-                    {context.catData.map((cat, index) => (
-                      <MenuItem
-                        key={index}
-                        value={cat._id}
-                        onClick={() => {
-                          selectCatByName(cat.name);
-                        }}
-                      >
-                        {cat.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              </div>
+     <section className="p-4 sm:p-5 bg-gray-50">
+  <form className="p-4 sm:p-8 py-3" onSubmit={handlesubmit}>
+    <div className="scroll max-h-[70vh] pr-2 sm:pr-4 overflow-y-auto">
+      {/* Product Name */}
+      <div className="mb-4">
+        <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Name</h3>
+        <input
+          type="text"
+          name="name"
+          value={formfields.name}
+          onChange={onChangeInput}
+          className="w-full h-[40px] sm:h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500"
+        />
+      </div>
 
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Sub Category
-                </h3>
-                {context.catData.length !== 0 && (
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="ProductCat"
-                    name="productCat"
-                    value={subCat}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    label="subCategory"
-                    onChange={handleChangesub}
-                  >
-                    {context.catData.map((cat, index) =>
-                      cat.children.map((subcat, index) => (
-                        <MenuItem
-                          key={index}
-                          value={subcat._id}
-                          onClick={() => {
-                            selectsubCatByName(subcat.name);
-                          }}
-                        >
-                          {subcat.name}
-                        </MenuItem>
-                      ))
-                    )}
-                  </Select>
-                )}
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Third Level Category
-                </h3>
-                {context.catData.length !== 0 && (
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="ProductCat"
-                    name="productCat"
-                    value={thirdsubCat}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    label="subCategory"
-                    onChange={handleChangethirdsub}
-                  >
-                    {context.catData.map((cat, index) =>
-                      cat.children.map((subcat, index) =>
-                        subcat.children.map((third, index) => (
-                          <MenuItem
-                            key={index}
-                            value={third._id}
-                            onClick={() => selectthirdsubCatByName(third.name)}
-                          >
-                            {third.name}
-                          </MenuItem>
-                        ))
-                      )
-                    )}
-                  </Select>
-                )}
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Price</h3>
-                <input
-                  type="number"
-                  name="price"
-                  value={formfields.price}
-                  onChange={onChangeInput}
-                  className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
+      {/* Product Description */}
+      <div className="mb-4">
+        <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Description</h3>
+        <textarea
+          name="description"
+          value={formfields.description}
+          onChange={onChangeInput}
+          className="w-full h-[100px] rounded-md px-4 py-2 border border-gray-300 focus:outline-none focus:border-gray-500"
+        />
+      </div>
 
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Old Price
-                </h3>
-                <input
-                  type="number"
-                  name="oldprice"
-                  value={formfields.oldprice}
-                  onChange={onChangeInput}
-                  className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Featured
-                </h3>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="ProductsubCat"
-                  value={subfet}
-                  className="w-full bg-white rounded-md h-[45px]"
-                  label="Category"
-                  onChange={FeaturedhandleChange}
+      {/* Product Details Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {/* Category */}
+        <div>
+          <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Category</h3>
+          {context.catData.length !== 0 && (
+            <Select
+              name="productCat"
+              value={Cat}
+              onChange={handleChange}
+              className="w-full bg-white rounded-md h-[45px]"
+            >
+              {context.catData.map((cat, index) => (
+                <MenuItem
+                  key={index}
+                  value={cat._id}
+                  onClick={() => selectCatByName(cat.name)}
                 >
-                  <MenuItem value={true}>True</MenuItem>
-                  <MenuItem value={false}>False</MenuItem>
-                </Select>
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Stock</h3>
-                <input
-                  type="number"
-                  name="countInStock"
-                  value={formfields.countInStock}
-                  onChange={onChangeInput}
-                  className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Brand</h3>
-                <input
-                  type="text"
-                  name="brand"
-                  value={formfields.brand}
-                  onChange={onChangeInput}
-                  className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">
-                  Product Discount
-                </h3>
-                <input
-                  type="number"
-                  name="discount"
-                  value={formfields.discount}
-                  onChange={onChangeInput}
-                  className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                />
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Rams</h3>
-                {pramData.length !== 0 && (
-                  <Select
-                    multiple
-                    labelId="demo-simple-select-label"
-                    id="Productram"
-                    value={pram}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    onChange={RamhandleChange}
+                  {cat.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        </div>
+
+        {/* Sub Category */}
+        <div>
+          <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Sub Category</h3>
+          {context.catData.length !== 0 && (
+            <Select
+              value={subCat}
+              onChange={handleChangesub}
+              className="w-full bg-white rounded-md h-[45px]"
+            >
+              {context.catData.flatMap((cat) =>
+                cat.children.map((subcat, index) => (
+                  <MenuItem
+                    key={index}
+                    value={subcat._id}
+                    onClick={() => selectsubCatByName(subcat.name)}
                   >
-                    {pramData.map((ram, index) => (
-                      <MenuItem
-                        key={index}
-                        value={ram.ram}
-                        onClick={() => selectram(ram)}
-                      >
-                        {ram.ram}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              </div>
-
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Weight</h3>
-                {pweightData.length !== 0 && (
-                  <Select
-                    multiple
-                    labelId="demo-simple-select-label"
-                    id="Productweight"
-                    value={pweight}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    label="Category"
-                    onChange={weighthandleChange}
-                  >
-                    {pweightData.map((weight, index) => (
-                      <MenuItem
-                        key={index}
-                        value={weight.weight}
-                        onClick={() => selectweight(weight)}
-                      >
-                        {weight.weight}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              </div>
-              <div className="col">
-                <h3 className="text-[16px] font-[600] mb-2">Product Size</h3>
-                {psizeData.length !== 0 && (
-                  <Select
-                    multiple
-                    labelId="demo-simple-select-label"
-                    id="Productsize"
-                    value={psize}
-                    className="w-full bg-white rounded-md h-[45px]"
-                    label="Category"
-                    onChange={sizehandleChange}
-                  >
-                    {psizeData.map((size, index) => (
-                      <MenuItem
-                        key={index}
-                        value={size.size}
-                        onClick={() => selectsize(size)}
-                      >
-                        {size.size}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              </div>
-              <div className="col mt-1">
-                <h3 className="text-[16px] font-[600] mb-4">Product Rating</h3>
-                <Rating
-                  name="half-rating"
-                  value={formfields.rating}
-                  onChange={onChangeRating}
-                  precision={0.5}
-                />
-              </div>
-            </div>
-
-            <div className="col w-full p-5 px-0">
-              <h3 className="text-[22px] font-[600] mb-4"> Media & Publish</h3>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pb-6">
-                {preview.length !== 0 &&
-                  preview.map((image, index) => (
-                    <div className="relative group" key={index}>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          removeImage(image, index);
-                        }}
-                        className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center z-10 shadow-md"
-                      >
-                        <IoCloseSharp className="text-sm" />
-                      </button>
-
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden h-[150px] w-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 flex items-center justify-center">
-                        <LazyLoadImage
-                          alt={image}
-                          effect="blur"
-                          className="w-full h-full object-cover"
-                          src={image.url}
-                        />
-                      </div>
-                    </div>
-                  ))}
-
-                <FileUploadBox
-                  url="/api/product/uploadimage"
-                  multiple={true}
-                  setpreviewfun={setpreviewfun}
-                />
-              </div>
-            </div>
-
-            <div className="col w-full p-5 px-0">
-              <div className="flex items-center gap-4">
-                <h3 className="text-[22px] font-[600] mb-4"> Banner Images</h3>
-
-                <Switch
-                  onChange={handlebanner}
-                  checked={checkswitch}
-                  {...label}
-                />
-              </div>
-              {formfields.IsDisplayedHome && (
-                <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pb-6">
-                    {bannerpreview.length !== 0 &&
-                      bannerpreview.map((image, index) => (
-                        <div className="relative group" key={index}>
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              removebannerImage(image, index);
-                            }}
-                            className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center z-10 shadow-md"
-                          >
-                            <IoCloseSharp className="text-sm" />
-                          </button>
-
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden h-[150px] w-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 flex items-center justify-center">
-                            <LazyLoadImage
-                              alt="Banner"
-                              effect="blur"
-                              className="w-full h-full object-cover"
-                              src={
-                                typeof image === "string" ? image : image.url
-                              }
-                            />
-                          </div>
-                        </div>
-                      ))}
-
-                    <FileUploadBox
-                      url="/api/product/uploadbannerimage"
-                      multiple={true}
-                      name="bannerImage"
-                      setpreviewfun={setpreviewbannerfun}
-                    />
-                  </div>
-                  <div className="col">
-                    <h3 className="text-[16px] font-[600] mb-2">
-                      Banner Title
-                    </h3>
-                    <input
-                      type="text"
-                      name="bannerTitle"
-                      value={formfields.bannerTitle}
-                      onChange={onChangeInput}
-                      className=" no-spinner w-full h-[45px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-                    />
-                  </div>
-                </>
+                    {subcat.name}
+                  </MenuItem>
+                ))
               )}
-            </div>
-          </div>
+            </Select>
+          )}
+        </div>
 
-          <Button
-            type="submit"
-            className="!bg-primary !text-white items-center mt-4 w-full !pr-2 gap-2 !pl-12"
-          >
-            <IoMdCloudUpload className="text-[25px] " /> Publish Product
-            {isLoading && <CircularProgress color="inherit" size={20} />}
-          </Button>
-        </form>
-      </section>
+        {/* Third Level Category */}
+        <div>
+          <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Third Level Category</h3>
+          {context.catData.length !== 0 && (
+            <Select
+              value={thirdsubCat}
+              onChange={handleChangethirdsub}
+              className="w-full bg-white rounded-md h-[45px]"
+            >
+              {context.catData.flatMap((cat) =>
+                cat.children.flatMap((subcat) =>
+                  subcat.children.map((third, index) => (
+                    <MenuItem
+                      key={index}
+                      value={third._id}
+                      onClick={() => selectthirdsubCatByName(third.name)}
+                    >
+                      {third.name}
+                    </MenuItem>
+                  ))
+                )
+              )}
+            </Select>
+          )}
+        </div>
+
+        {/* Price */}
+        <div>
+          <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Price</h3>
+          <input
+            type="number"
+            name="price"
+            value={formfields.price}
+            onChange={onChangeInput}
+            className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500 no-spinner"
+          />
+        </div>
+
+        {/* Old Price */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Old Price</h3>
+  <input
+    type="number"
+    name="oldprice"
+    value={formfields.oldprice}
+    onChange={onChangeInput}
+    className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500 no-spinner"
+  />
+</div>
+
+{/* Featured */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Featured</h3>
+  <Select
+    value={subfet}
+    onChange={FeaturedhandleChange}
+    className="w-full bg-white rounded-md h-[45px]"
+  >
+    <MenuItem value={true}>True</MenuItem>
+    <MenuItem value={false}>False</MenuItem>
+  </Select>
+</div>
+
+{/* Stock */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Stock</h3>
+  <input
+    type="number"
+    name="countInStock"
+    value={formfields.countInStock}
+    onChange={onChangeInput}
+    className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500 no-spinner"
+  />
+</div>
+
+{/* Brand */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Brand</h3>
+  <input
+    type="text"
+    name="brand"
+    value={formfields.brand}
+    onChange={onChangeInput}
+    className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500"
+  />
+</div>
+
+{/* Discount */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Discount</h3>
+  <input
+    type="number"
+    name="discount"
+    value={formfields.discount}
+    onChange={onChangeInput}
+    className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500 no-spinner"
+  />
+</div>
+
+{/* Rams */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Rams</h3>
+  {pramData.length !== 0 && (
+    <Select
+      multiple
+      value={pram}
+      onChange={RamhandleChange}
+      className="w-full bg-white rounded-md h-[45px]"
+    >
+      {pramData.map((ram, index) => (
+        <MenuItem
+          key={index}
+          value={ram.ram}
+          onClick={() => selectram(ram)}
+        >
+          {ram.ram}
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+</div>
+
+{/* Weight */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Weight</h3>
+  {pweightData.length !== 0 && (
+    <Select
+      multiple
+      value={pweight}
+      onChange={weighthandleChange}
+      className="w-full bg-white rounded-md h-[45px]"
+    >
+      {pweightData.map((weight, index) => (
+        <MenuItem
+          key={index}
+          value={weight.weight}
+          onClick={() => selectweight(weight)}
+        >
+          {weight.weight}
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+</div>
+
+{/* Size */}
+<div>
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Size</h3>
+  {psizeData.length !== 0 && (
+    <Select
+      multiple
+      value={psize}
+      onChange={sizehandleChange}
+      className="w-full bg-white rounded-md h-[45px]"
+    >
+      {psizeData.map((size, index) => (
+        <MenuItem
+          key={index}
+          value={size.size}
+          onClick={() => selectsize(size)}
+        >
+          {size.size}
+        </MenuItem>
+      ))}
+    </Select>
+  )}
+</div>
+
+{/* Rating */}
+<div className="flex flex-col justify-center">
+  <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Product Rating</h3>
+  <Rating
+    name="half-rating"
+    value={formfields.rating}
+    onChange={onChangeRating}
+    precision={0.5}
+  />
+</div>
+
+      </div>
+
+      {/* Media & Publish */}
+      <div className="mb-8">
+        <h3 className="text-lg font-semibold mb-4">Media & Publish</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {preview.length > 0 &&
+            preview.map((image, index) => (
+              <div className="relative group" key={index}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeImage(image, index);
+                  }}
+                  className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center z-10 shadow-md"
+                >
+                  <IoCloseSharp className="text-sm" />
+                </button>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden h-[150px] bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                  <LazyLoadImage
+                    alt={image}
+                    effect="blur"
+                    className="w-full h-full object-cover"
+                    src={image.url}
+                  />
+                </div>
+              </div>
+            ))}
+
+          <FileUploadBox
+            url="/api/product/uploadimage"
+            multiple
+            setpreviewfun={setpreviewfun}
+          />
+        </div>
+      </div>
+
+      {/* Banner Images */}
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4">
+          <h3 className="text-lg font-semibold">Banner Images</h3>
+          <Switch onChange={handlebanner} checked={checkswitch} {...label} />
+        </div>
+        {formfields.IsDisplayedHome && (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 pb-6">
+              {bannerpreview.length > 0 &&
+                bannerpreview.map((image, index) => (
+                  <div className="relative group" key={index}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        removebannerImage(image, index);
+                      }}
+                      className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center z-10 shadow-md"
+                    >
+                      <IoCloseSharp className="text-sm" />
+                    </button>
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden h-[150px] bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                      <LazyLoadImage
+                        alt="Banner"
+                        effect="blur"
+                        className="w-full h-full object-cover"
+                        src={typeof image === "string" ? image : image.url}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+              <FileUploadBox
+                url="/api/product/uploadbannerimage"
+                multiple
+                name="bannerImage"
+                setpreviewfun={setpreviewbannerfun}
+              />
+            </div>
+            <div className="mt-4">
+              <h3 className="text-sm sm:text-[16px] font-semibold mb-2">Banner Title</h3>
+              <input
+                type="text"
+                name="bannerTitle"
+                value={formfields.bannerTitle}
+                onChange={onChangeInput}
+                className="w-full h-[45px] rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500"
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+
+    <Button
+      type="submit"
+      className="!bg-primary !text-white items-center mt-4 w-full gap-2 !pl-12"
+    >
+      <IoMdCloudUpload className="text-[25px]" /> Publish Product
+      {isLoading && <CircularProgress color="inherit" size={20} />}
+    </Button>
+  </form>
+</section>
+
     </>
   );
 }

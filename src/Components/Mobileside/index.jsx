@@ -16,7 +16,7 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 import { useContext, useState } from "react";
 import { Mycontext } from "../../App";
 
-export default function Sidebar() {
+export default function MobileSidebar() {
   const [submenuindex, setsubmenuindex] = useState(null);
   const isOpenSub = (index) => {
     if (submenuindex === index) {
@@ -27,17 +27,15 @@ export default function Sidebar() {
   };
   const context = useContext(Mycontext);
   return (
-    <div
-      className={`sidebar fixed top-0 left-0 !bg-white h-full border-r border-[rgba(0,0,0,0.1)] 
-        transition-all duration-300 overflow-hidden ${context.isSidebar===true ?'w-[18%]' : 'w-0'} `}
-    >
+    
       <>
-        <div className="py-2 w-full">
-          <Link to="/">
-            <img src={logo} className="w-[200px] h-auto" alt="Logo" />
-          </Link>
-        </div>
-        {context.isSidebar === true && (
+        <div className="py-2 flex justify-center items-center">
+  <Link to="/">
+    <img src={logo} alt="Logo" className="w-32 md:w-40 lg:w-48 h-auto" />
+  </Link>
+</div>
+
+        
           <ul className="mt-4">
             <li>
               <Link to="/">
@@ -341,8 +339,8 @@ export default function Sidebar() {
               </Button>
             </li>
           </ul>
-         )} 
+        
       </>
-    </div>
+   
   );
 }
