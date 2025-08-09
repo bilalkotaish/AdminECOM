@@ -289,6 +289,7 @@ export default function Signup() {
           </Link>
         </h2>
       </form>
+      <div className="h-3 sm:h-5 lg:h-5 !bg-white"></div>
     </div>
   </section>
   

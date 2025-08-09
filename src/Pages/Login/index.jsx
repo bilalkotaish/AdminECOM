@@ -304,7 +304,7 @@ export default function Login() {
         </h2>
       </form>
   
-      <div className="h-20 sm:h-32 lg:h-40"></div>
+      <div className="h-3 sm:h-5 lg:h-5 !bg-white"></div>
     </div>
   </section>
   
