@@ -13,8 +13,9 @@ a.active button {
   background: #cecece !important;
 }
 
-#loginsection {
+.loginsection {
   background-color: white;
+  height: max-content;
 }
 .css-rizt0-MuiTypography-root {
   font-size: 14px !important;

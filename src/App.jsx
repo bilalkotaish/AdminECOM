@@ -172,8 +172,8 @@ function App() {
 
         element: (
           <>
-            {" "}
-            <Signup />{" "}
+            
+            <Signup />
           </>
         ),
       },
