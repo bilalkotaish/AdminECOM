@@ -14,9 +14,10 @@ a.active button {
 }
 
 .loginsection {
-  background-color: white;
-  height: max-content;
+  min-height: 100vh; /* Fill full screen height */
+  background-color: white; /* Match form background */
 }
+
 .css-rizt0-MuiTypography-root {
   font-size: 14px !important;
 }
