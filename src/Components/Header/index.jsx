@@ -39,6 +39,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Sidebar from "../Sidebar";
 import MobileSidebar from "../Mobileside";
+import { CgLogIn } from "react-icons/cg";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -122,16 +123,23 @@ export default function Header() {
     </IconButton>
 
     {context.isLogin ? (
-      <div className="relative">
+      <div className="relative pr-3">
         <div
-          className="rounded-full w-[35px] h-[35px] overflow-hidden cursor-pointer"
+          className="rounded-full w-[30px] h-[30px]  overflow-hidden cursor-pointer"
           onClick={handleClickMyacc}
         >
+          {
+            context.isLogin ? <img
+            src={context.userData?.Avatar}
+            className="  w-full h-full !object-cover rounded-full"
+            alt="User Avatar"
+          />
+          :
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhnJ8ohO113eX3thYt_EViTew3NXN3xwKxi4DzqigRhpA0GY6OWlgY5yZCOqPLda4y5fk&usqp=CAU."
             className="w-full h-full object-cover rounded-full"
             alt="User Avatar"
-          />
+          />}
         </div>
 
         {/* Dropdown Menu */}
@@ -175,11 +183,18 @@ export default function Header() {
           <MenuItem onClick={handleCloseMyacc}>
             <div className="flex items-center gap-3">
               <div className="rounded-full w-[35px] h-[35px] overflow-hidden">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhnJ8ohO113eX3thYt_EViTew3NXN3xwKxi4DzqigRhpA0GY6OWlgY5yZCOqPLda4y5fk&usqp=CAU."
-                  className="w-full h-full object-cover rounded-full"
-                  alt="User Avatar"
-                />
+              {
+            context.isLogin ? <img
+            src={context.userData?.Avatar}
+            className="  w-full h-full !object-cover rounded-full"
+            alt="User Avatar"
+          />
+          :
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhnJ8ohO113eX3thYt_EViTew3NXN3xwKxi4DzqigRhpA0GY6OWlgY5yZCOqPLda4y5fk&usqp=CAU."
+            className="w-full h-full object-cover rounded-full"
+            alt="User Avatar"
+          />}
               </div>
               <div className="info">
                 <h3 className="text-[16px] font-medium">
@@ -204,9 +219,9 @@ export default function Header() {
       </div>
     ) : (
       <Link to="/login">
-        <Button className="bg-blue-600 text-white rounded-full">
-          Login
-        </Button>
+      <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] !px-5 gap-2">
+              <CgLogIn className="!text-[20px]" /> Login
+            </Button>
       </Link>
     )}
   </div>

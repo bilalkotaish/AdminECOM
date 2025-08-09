@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { TbSlideshow } from "react-icons/tb";
 import { RiLogoutBoxLine } from "react-icons/ri";
@@ -15,9 +15,12 @@ import logo from "./../../assets/logo.png";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { useContext, useState } from "react";
 import { Mycontext } from "../../App";
+import { fetchData } from "../../utils/api";
 
 export default function MobileSidebar() {
   const [submenuindex, setsubmenuindex] = useState(null);
+  const [anchormyacc, setAnchormyacc] = useState(null);
+
   const isOpenSub = (index) => {
     if (submenuindex === index) {
       setsubmenuindex(null);
@@ -25,8 +28,32 @@ export default function MobileSidebar() {
       setsubmenuindex(index);
     }
   };
+  const history = useNavigate();
+  const handleClickMyacc = (event) => {
+    setAnchormyacc(event.currentTarget);
+  };
+  const handleCloseMyacc = () => {
+    setAnchormyacc(null);
+  };
+
   const context = useContext(Mycontext);
-  return (
+  const logout = () => {
+    setAnchormyacc(null);
+    fetchData(`/api/user/Logout?token=${localStorage.getItem("accesstoken")}`, {
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+      if (res.error === false) {
+        context.setisLogin(false);
+        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("refreshtoken");
+        history("/");
+      } else {
+        context.setisLogin(true);
+      }
+    });
+  };
+    return (
     
       <>
         <div className="py-2 flex justify-center items-center">
@@ -332,7 +359,7 @@ export default function MobileSidebar() {
               </Link>
             </li>
             <li>
-              <Button className="w-full !capitalize !justify-start !py-2 hover:!bg-[#f1f1f1]  items-center flex gap-3 !font-[500]  text-[14px] !text-[rgba(0,0,0,0.9)] ">
+              <Button onClick={logout} className="w-full !capitalize !justify-start !py-2 hover:!bg-[#f1f1f1]  items-center flex gap-3 !font-[500]  text-[14px] !text-[rgba(0,0,0,0.9)] ">
                 {" "}
                 <RiLogoutBoxLine className="text-[18px]" />
                 Logout
@@ -342,5 +369,5 @@ export default function MobileSidebar() {
         
       </>
    
-  );
+  )
 }

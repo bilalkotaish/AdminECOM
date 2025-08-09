@@ -224,226 +224,198 @@ export default function Profile() {
   };
   return (
     <>
-      <div className="card my-4 w-[70%] shadow-md sm:rounded-lg bg-white pb-5 px-5">
-        <div className="flex items-center w-full  justify-between pt-5 ">
-          <h1 className="text-[20px]  font-[600]">User Profile</h1>
-          <Button
-            className="!ml-auto"
-            onClick={() => {
-              setisclick(!isclick);
-            }}
-          >
-            Change Password
-          </Button>
-        </div>
-        <br />
-        <div className="w-[100px] h-[100px] rounded-full overflow-hidden flex items-center justify-center mb-4 relative group">
-          {upload ? (
-            <CircularProgress color="inherit" />
+  <div className="card my-4 w-full max-w-4xl mx-auto shadow-md sm:rounded-lg bg-white pb-6 px-4 sm:px-6">
+    {/* Header */}
+    <div className="flex flex-col sm:flex-row items-center justify-between pt-5 gap-3">
+      <h1 className="text-xl font-semibold">User Profile</h1>
+      <Button
+        className="sm:ml-auto w-full sm:w-auto"
+        onClick={() => setisclick(!isclick)}
+      >
+        Change Password
+      </Button>
+    </div>
+
+    {/* Avatar Upload */}
+    <div className="w-[80px] sm:w-[100px] h-[80px] sm:h-[100px] rounded-full overflow-hidden flex items-center justify-center mb-4 relative group mx-auto mt-6">
+      {upload ? (
+        <CircularProgress color="inherit" />
+      ) : (
+        <>
+          {preview.length > 0 ? (
+            preview.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt="preview"
+                className="w-full h-full object-cover"
+              />
+            ))
           ) : (
-            <>
-              {preview.length > 0 ? (
-                preview.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt="preview"
-                    className="w-full h-full object-cover"
-                  />
-                ))
-              ) : (
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSktcnWbHej5LP9gi_MAZXL1HvYlEpb9MLLsA&s" // Replace with your default image path
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </>
-          )}
-
-          <div
-            className="overlay w-full h-full absolute top-0 left-0 z-50 bg-[rgba(0,0,0,0.6)] flex
-                                  items-center justify-center cursor-pointer opacity-0 transition-all group-hover:opacity-100"
-          >
-            <MdCloudUpload className="text-white text-[25px]" />
-            <input
-              type="file"
-              className="top-0 left-0 absolute w-full h-full opacity-0"
-              accept="image/*"
-              onChange={(e) => {
-                onchangefile(e, "/api/user/user-avatar");
-              }}
-              name="Avatar"
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSktcnWbHej5LP9gi_MAZXL1HvYlEpb9MLLsA&s"
+              className="w-full h-full object-cover"
             />
-          </div>
-        </div>
+          )}
+        </>
+      )}
+      <div className="overlay w-full h-full absolute top-0 left-0 z-50 bg-black/60 flex items-center justify-center cursor-pointer opacity-0 transition-opacity group-hover:opacity-100">
+        <MdCloudUpload className="text-white text-xl" />
+        <input
+          type="file"
+          className="absolute w-full h-full opacity-0"
+          accept="image/*"
+          onChange={(e) => onchangefile(e, "/api/user/user-avatar")}
+          name="Avatar"
+        />
+      </div>
+    </div>
 
-        <form className="pt-8 " onSubmit={handlesubmit}>
-          <div className="flex items-center  gap-5 ">
-            <div className="w-[50%]">
-              <input
-                type="text"
-                disabled={isLoading}
-                value={formfield.name}
-                name="name"
-                onChange={onChangeInput}
-                className="w-full h-[35px] rounded-md p-5 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-              />
-            </div>
-            <div className="w-[50%] h-auto">
-              <input
-                type="email"
-                value={formfield.email}
-                disabled={true}
-                name="email"
-                onChange={onChangeInput}
-                className="w-full h-[35px] rounded-md p-5  text-gray-400 border border-[rgba(0,0,0,0.2)] focus:outline-none focus:border-[rgba(0,0,0,0.5)]"
-              />
-            </div>
-          </div>
-          <div className="flex items-center mt-3 gap-5 ">
-            <div className="w-[49%]">
-              <PhoneInput
-                type="text"
-                disabled={isLoading}
-                defaultCountry="lb"
-                value={phone}
-                name="Mobile"
-                inputStyle={{
-                  width: "100%",
-                  border: "!3px !solid !rgba(0,0,0,0.7)",
-                }}
-                containerStyle={{
-                  width: "100%",
-                  border: "!3px !solid !rgba(0,0,0,0.7)",
-                  borderRadius: "6px",
-                }}
-                onChange={(phone) => {
-                  setPhone(phone);
-                  setformfield((prev) => ({ ...prev, Mobile: phone }));
-                }}
-              />
-            </div>
-          </div>
-          <div
-            onClick={() =>
-              context.setisOpenPanel({ open: true, model: "Add Address" })
-            }
-            className="flex items-center mt-3 p-5 cursor-pointer hover:bg-[#e7f3f9] justify-center border border-[rgba(0,0,0,0.2)] border-dashed bg-[#f1faff]"
-          >
-            <span className="text-[16px] font-[400]">Add Address</span>
-          </div>
-          <div className="gap-2 flex-col flex mt-4">
-            {address?.length > 0 &&
-              address?.map((address, index) => {
-                return (
-                  <>
-                    <label className="addressBox p-3 border border-[rgba(0,0,0,0.2)] bg-[#f1f1f1] flex items-center w-full !pt-3 !pb-3 cursor-pointer">
-                      <Radio
-                        onChange={handleChange}
-                        value={address._id}
-                        checked={selectedValue === address._id}
-                        name="address"
-                      />
-                      <span className="text-[12px] font-[400]">
-                        {address?.Address_line}
-                        <br />
-                        {address?.City}, {address?.Country}
-                        <br />
-                        {address?.Pincode}
-                        <br />
-                        {address?.Mobile}
-                        <br />
-                        {address?.Status ? "true" : "false"}
-                        <br />
-                      </span>
-                    </label>
-                  </>
-                );
-              })}
-          </div>
-
-          <br />
-
-          <div className="flex items-center gap-5">
-            <Button
-              type="submit"
-              disabled={!validValue}
-              className="!bg-gray-800 !text-white w-[100%]"
-            >
-              {" "}
-              Update Profile
-              {isLoading === true ? <CircularProgress color="inherit" /> : ""}
-            </Button>
-          </div>
-        </form>
+    {/* Profile Form */}
+    <form className="pt-6" onSubmit={handlesubmit}>
+      <div className="flex flex-col sm:flex-row gap-5">
+        <input
+          type="text"
+          disabled={isLoading}
+          value={formfield.name}
+          name="name"
+          onChange={onChangeInput}
+          className="w-full h-10 rounded-md px-4 border border-gray-300 focus:outline-none focus:border-gray-500"
+        />
+        <input
+          type="email"
+          value={formfield.email}
+          disabled
+          name="email"
+          onChange={onChangeInput}
+          className="w-full h-10 rounded-md px-4 text-gray-400 border border-gray-300 focus:outline-none focus:border-gray-500"
+        />
       </div>
 
-      <Collapse isOpened={isclick}>
-        <div className="card bg-white shadow-md w-[70%] rounded-md p-5 mt-5">
-          <div className="flex items-center">
-            <h1 className="text-[20px]  font-[600]"> Change Password</h1>
-          </div>
-          <form className="mt-8 " onSubmit={handlesubmitChange}>
-            <div className="flex items-center  gap-5 ">
-              <div className="w-[50%]">
-                <TextField
-                  label="oldPassword"
-                  type="password"
-                  variant="outlined"
-                  disabled={isLoading2}
-                  value={changePassword.oldPassword}
-                  size="small"
-                  className="w-full"
-                  name="oldPassword"
-                  onChange={onChangeInput}
-                />
-              </div>
-              <div className="w-[50%] h-auto">
-                <TextField
-                  disabled={isLoading2}
-                  value={changePassword.password}
-                  label="password"
-                  type="password"
-                  variant="outlined"
-                  size="small"
-                  className="w-full"
-                  name="password"
-                  onChange={onChangeInput}
-                />
-              </div>
-            </div>
-            <div className="flex items-center mt-3 gap-5 ">
-              <div className="w-[50%]">
-                <TextField
-                  label="confirmPassword"
-                  variant="outlined"
-                  type="password"
-                  disabled={isLoading2}
-                  value={changePassword.confirmPassword}
-                  size="small"
-                  name="confirmPassword"
-                  className="w-full"
-                  onChange={onChangeInput}
-                />
-              </div>
-            </div>
+      <div className="mt-4">
+        <PhoneInput
+          disabled={isLoading}
+          defaultCountry="lb"
+          value={phone}
+          name="Mobile"
+          inputStyle={{ width: "100%" }}
+          containerStyle={{ width: "100%", borderRadius: "6px" }}
+          onChange={(phone) => {
+            setPhone(phone);
+            setformfield((prev) => ({ ...prev, Mobile: phone }));
+          }}
+        />
+      </div>
 
-            <br />
+      <div
+        onClick={() =>
+          context.setisOpenPanel({ open: true, model: "Add Address" })
+        }
+        className="flex items-center mt-4 p-4 cursor-pointer hover:bg-blue-100 justify-center border border-dashed border-gray-300 bg-blue-50 rounded-md"
+      >
+        <span className="text-base font-medium">Add Address</span>
+      </div>
 
-            <div className="flex items-center gap-5">
-              <Button
-                type="submit"
-                disabled={!validValue2}
-                className="!bg-gray-800 !text-white w-full h-auto"
-              >
-                {" "}
-                Change Password
-                {isLoading === true ? <CircularProgress color="inherit" /> : ""}
-              </Button>
-            </div>
-          </form>
+      {/* Address List */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {address?.length > 0 &&
+          address.map((address, index) => (
+            <label
+              key={index}
+              className="p-3 border border-gray-300 bg-gray-100 rounded-md flex flex-col cursor-pointer"
+            >
+              <Radio
+                onChange={handleChange}
+                value={address._id}
+                checked={selectedValue === address._id}
+                name="address"
+              />
+              <span className="text-sm font-normal mt-2">
+                {address?.Address_line}
+                <br />
+                {address?.City}, {address?.Country}
+                <br />
+                {address?.Pincode}
+                <br />
+                {address?.Mobile}
+                <br />
+                {address?.Status ? "true" : "false"}
+              </span>
+            </label>
+          ))}
+      </div>
+
+      <div className="flex items-center gap-5 mt-6">
+        <Button
+          type="submit"
+          disabled={!validValue}
+          className="w-full sm:w-auto !bg-gray-800 !text-white px-6 py-2"
+        >
+          Update Profile
+          {isLoading && <CircularProgress color="inherit" className="ml-2" />}
+        </Button>
+      </div>
+    </form>
+  </div>
+
+  {/* Change Password Section */}
+  <Collapse isOpened={isclick}>
+    <div className="card bg-white shadow-md w-full max-w-4xl mx-auto rounded-md p-4 sm:p-6 mt-6">
+      <h1 className="text-xl font-semibold mb-4">Change Password</h1>
+      <form onSubmit={handlesubmitChange}>
+        <div className="flex flex-col sm:flex-row gap-5">
+          <TextField
+            label="Old Password"
+            type="password"
+            variant="outlined"
+            disabled={isLoading2}
+            value={changePassword.oldPassword}
+            size="small"
+            name="oldPassword"
+            className="w-full"
+            onChange={onChangeInput}
+          />
+          <TextField
+            label="New Password"
+            type="password"
+            variant="outlined"
+            disabled={isLoading2}
+            value={changePassword.password}
+            size="small"
+            name="password"
+            className="w-full"
+            onChange={onChangeInput}
+          />
         </div>
-      </Collapse>
-    </>
+
+        <div className="mt-4">
+          <TextField
+            label="Confirm Password"
+            type="password"
+            variant="outlined"
+            disabled={isLoading2}
+            value={changePassword.confirmPassword}
+            size="small"
+            name="confirmPassword"
+            className="w-full"
+            onChange={onChangeInput}
+          />
+        </div>
+
+        <div className="flex items-center gap-5 mt-6">
+          <Button
+            type="submit"
+            disabled={!validValue2}
+            className="w-full sm:w-auto !bg-gray-800 !text-white px-6 py-2"
+          >
+            Change Password
+            {isLoading2 && <CircularProgress color="inherit" className="ml-2" />}
+          </Button>
+        </div>
+      </form>
+    </div>
+  </Collapse>
+</>
+
   );
 }

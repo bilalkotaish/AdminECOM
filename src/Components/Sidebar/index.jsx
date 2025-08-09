@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 import { TbSlideshow } from "react-icons/tb";
 import { RiLogoutBoxLine } from "react-icons/ri";
@@ -15,9 +15,12 @@ import logo from "./../../assets/logo.png";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { useContext, useState } from "react";
 import { Mycontext } from "../../App";
+import { fetchData } from "../../utils/api";
 
 export default function Sidebar() {
   const [submenuindex, setsubmenuindex] = useState(null);
+  const [anchormyacc, setAnchormyacc] = useState(null);
+
   const isOpenSub = (index) => {
     if (submenuindex === index) {
       setsubmenuindex(null);
@@ -25,7 +28,31 @@ export default function Sidebar() {
       setsubmenuindex(index);
     }
   };
+  const handleClickMyacc = (event) => {
+    setAnchormyacc(event.currentTarget);
+  };
+  const handleCloseMyacc = () => {
+    setAnchormyacc(null);
+  };
+  const history = useNavigate();
+
   const context = useContext(Mycontext);
+  const logout = () => {
+    setAnchormyacc(null);
+    fetchData(`/api/user/Logout?token=${localStorage.getItem("accesstoken")}`, {
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+      if (res.error === false) {
+        context.setisLogin(false);
+        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("refreshtoken");
+        history("/");
+      } else {
+        context.setisLogin(true);
+      }
+    });
+  };
   return (
     <div
       className={`sidebar fixed top-0 left-0 !bg-white h-full border-r border-[rgba(0,0,0,0.1)] 
@@ -334,7 +361,7 @@ export default function Sidebar() {
               </Link>
             </li>
             <li>
-              <Button className="w-full !capitalize !justify-start !py-2 hover:!bg-[#f1f1f1]  items-center flex gap-3 !font-[500]  text-[14px] !text-[rgba(0,0,0,0.9)] ">
+              <Button onClick={logout} className="w-full !capitalize !justify-start !py-2 hover:!bg-[#f1f1f1]  items-center flex gap-3 !font-[500]  text-[14px] !text-[rgba(0,0,0,0.9)] ">
                 {" "}
                 <RiLogoutBoxLine className="text-[18px]" />
                 Logout

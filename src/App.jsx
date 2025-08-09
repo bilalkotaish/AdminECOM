@@ -518,7 +518,7 @@ function App() {
   return (
     <Mycontext.Provider value={values}>
       <RouterProvider router={router} />
-      <Toaster />;
+      <Toaster />
     </Mycontext.Provider>
   );
 }
