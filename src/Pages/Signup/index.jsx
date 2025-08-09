@@ -123,7 +123,7 @@ export default function Signup() {
       });
   };
   return (
-    <section className="relative !bg-white pb-2 loginsection">
+    <section className="relative !bg-white  loginsection">
     {/* Header */}
     <header className="w-full lg:fixed z-50 top-0 left-0 px-4 py-2 flex flex-wrap items-center justify-center md:justify-between">
       <Link to="/" className="mb-2 md:mb-0">
@@ -289,7 +289,7 @@ export default function Signup() {
           </Link>
         </h2>
       </form>
-      <div className="h-3 sm:h-5 lg:h-5 !bg-white"></div>
+      {/* <div className="h-10 sm:h-25 lg:h-40"></div> */}
     </div>
   </section>
   
