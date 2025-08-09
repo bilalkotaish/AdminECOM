@@ -123,154 +123,174 @@ export default function Signup() {
       });
   };
   return (
-    <section className="relative bg-white loginsection">
-      <header className="w-full  lg:fixed z-50 !top-0 !left-0 px-4 py-2 flex !items-center !justify-center md:!justify-between">
-        <Link to="/">
-          <svg width="200" height="100" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="white" />
-            <text
-              x="50%"
-              y="50%"
-              font-family="Arial, sans-serif"
-              font-size="24"
-              font-weight="bold"
-              text-anchor="middle"
-              dominant-baseline="middle"
-              fill="black"
-            >
-              Billy Ecommerce
-            </text>
-          </svg>
-        </Link>
-
-        <div className=" hidden md:flex items-center gap-4">
-          <NavLink to="/login" exact={true} activeClassName="isActive">
-            <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] !px-5 gap-2">
-              <CgLogIn className="!text-[20px]" /> Login
-            </Button>
-          </NavLink>
-          <NavLink to="/signup">
-            <Button className="!rounded-full !text-[rgba(0,0,0,0.8)] px-4 gap-2">
-              <MdOutlineFollowTheSigns className="!text-[20px]" /> Sign Up
-            </Button>
-          </NavLink>
-        </div>
-      </header>
-      <img
-        src="https://www.ledr.com/colours/white.jpg"
-        className="absolute w-full h-full top-0 left-0 object-cover opacity-30 z-10"
-      />
-
-      <div className="loginbox card w-[90%] md:w-[550px] h-[auto] pt-0 lg:pt-56 pb-20 mx-auto pt-2 relative z-50   ">
-        <h1 className="text-center text-[20px] sm:text-[35px] font-[700]">
-          {" "}
-          Join Us Now!
-          <br />
-          Get Special Benifits Bundle
-        </h1>
-        <div className="flex justify-center mt-5 gap-4">
-          <Button
-            size="small"
-            onClick={authWithGoogle}
-            endIcon={<FcGoogle />}
-            loading={loading}
-            loadingPosition="end"
-            variant="outlined"
-            className="!bg-none !text-[14px] !capitalize hover:!bg-red-600 hover:text-white"
+    <section className="relative bg-white pb-2 loginsection">
+    {/* Header */}
+    <header className="w-full lg:fixed z-50 top-0 left-0 px-4 py-2 flex flex-wrap items-center justify-center md:justify-between">
+      <Link to="/" className="mb-2 md:mb-0">
+        <svg
+          width="150"
+          height="60"
+          viewBox="0 0 200 100"
+          xmlns="http://www.w3.org/2000/svg"
+          className="max-w-full h-auto"
+        >
+          <rect width="100%" height="100%" fill="white" />
+          <text
+            x="50%"
+            y="50%"
+            fontFamily="Arial, sans-serif"
+            fontSize="24"
+            fontWeight="bold"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="black"
           >
-            Sign Up With Google
+            Billy Ecommerce
+          </text>
+        </svg>
+      </Link>
+  
+      <div className="hidden md:flex items-center gap-4 flex-wrap">
+        <NavLink to="/login" exact="true" activeClassName="isActive">
+          <Button className="rounded-full text-[rgba(0,0,0,0.8)] px-5 gap-2">
+            <CgLogIn className="text-[20px]" /> Login
+          </Button>
+        </NavLink>
+        <NavLink to="/signup">
+          <Button className="rounded-full text-[rgba(0,0,0,0.8)] px-4 gap-2">
+            <MdOutlineFollowTheSigns className="text-[20px]" /> Sign Up
+          </Button>
+        </NavLink>
+      </div>
+    </header>
+  
+    {/* Background Image */}
+    <img
+      src="https://www.ledr.com/colours/white.jpg"
+      className="absolute w-full h-full top-0 left-0 object-cover opacity-30 z-10"
+      alt="Background"
+    />
+  
+    {/* Sign-Up Box */}
+    <div className="loginbox card w-[90%] max-w-[550px] pt-0 lg:pt-56 pb-20 mx-auto pt-2 relative z-50">
+      <h1 className="text-center text-[18px] sm:text-[28px] lg:text-[35px] font-[700]">
+        Join Us Now!
+        <br />
+        Get Special Benifits Bundle
+      </h1>
+  
+      {/* Google Sign-Up */}
+      <div className="flex justify-center mt-5 gap-4 flex-wrap">
+        <Button
+          size="small"
+          onClick={authWithGoogle}
+          endIcon={<FcGoogle />}
+          loading={loading}
+          loadingPosition="end"
+          variant="outlined"
+          className="bg-none text-[14px] capitalize hover:bg-red-600 hover:text-white w-full sm:w-auto"
+        >
+          Sign Up With Google
+        </Button>
+      </div>
+  
+      {/* Divider */}
+      <div className="w-full flex items-center justify-center gap-3 mt-4 flex-wrap text-center">
+        <span className="flex items-center w-[60px] sm:w-[100px] h-[2px] bg-slate-300"></span>
+        <span className="text-[10px] sm:text-[13px]">
+          Or Sign Up With Your Email
+        </span>
+        <span className="flex items-center w-[60px] sm:w-[100px] h-[2px] bg-slate-300"></span>
+      </div>
+  
+      {/* Sign-Up Form */}
+      <form
+        className="w-full px-3 sm:px-8 mt-4"
+        onSubmit={handlesubmit}
+      >
+        {/* Full Name */}
+        <div className="w-full form-group mb-4">
+          <h4 className="text-sm sm:text-base">FullName</h4>
+          <input
+            type="text"
+            className="w-full h-[40px] sm:h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] focus:outline-none px-3"
+            name="name"
+            value={formFields.name}
+            disabled={isLoading}
+            onChange={onChangeInput}
+          />
+        </div>
+  
+        {/* Email */}
+        <div className="w-full form-group mb-4">
+          <h4 className="text-sm sm:text-base">Email</h4>
+          <input
+            type="email"
+            className="w-full h-[40px] sm:h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] focus:outline-none px-3"
+            disabled={isLoading}
+            value={formFields.email}
+            name="email"
+            onChange={onChangeInput}
+          />
+        </div>
+  
+        {/* Password */}
+        <div className="w-full form-group mb-4">
+          <h4 className="text-sm sm:text-base">Password</h4>
+          <div className="relative w-full">
+            <input
+              type={isShowPass ? "text" : "password"}
+              className="w-full h-[40px] sm:h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] focus:outline-none px-3"
+              name="password"
+              disabled={isLoading}
+              value={formFields.password}
+              onChange={onChangeInput}
+            />
+            <Button
+              className="!absolute top-[5px] sm:top-[7px] right-[7px] z-50 rounded-full w-[30px] sm:w-[35px] h-[30px] sm:h-[35px] min-w-[30px] sm:min-w-[35px]"
+              onClick={() => setisShowPass(!isShowPass)}
+            >
+              {isShowPass ? (
+                <FaEyeSlash className="text-[16px] sm:text-[18px]" />
+              ) : (
+                <FaEye className="text-[16px] sm:text-[18px]" />
+              )}
+            </Button>
+          </div>
+        </div>
+  
+        {/* Remember Me */}
+        <div className="w-full form-group mb-4 flex items-center justify-between flex-wrap">
+          <FormControlLabel
+            control={<Checkbox defaultChecked />}
+            label="Remember Me"
+          />
+        </div>
+  
+        {/* Submit Button */}
+        <div className="flex items-center mt-3 mb-3">
+          <Button
+            type="submit"
+            disabled={!validValue}
+            className="!bg-black !text-white w-full gap-3"
+          >
+            Sign Up
+            {isLoading && <CircularProgress color="inherit" />}
           </Button>
         </div>
-        <br />
-
-        <div className="w-full flex items-center justify-center gap-3">
-          <span className="flex items-center w-[100px] h-[2px] bg-slate-300"></span>
-          <span className="text-[10px] sm:text-[13px]"> Or Sign Up With Your Email</span>
-          <span className="flex items-center w-[100px] h-[2px] bg-slate-300"></span>
-        </div>
-
-        <form className="w-full px-8" onSubmit={handlesubmit}>
-          <div className="w-full form-group mb-4">
-            <h4>FullName</h4>
-            <input
-              type="text"
-              className="w-full h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] 
-              focus:outline-none px-3"
-              name="name"
-              value={formFields.name}
-              disabled={isLoading === true ? true : false}
-              onChange={onChangeInput}
-            />
-          </div>
-          <div className="w-full form-group mb-4">
-            <h4>Email</h4>
-            <input
-              type="email"
-              className="w-full h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] 
-              focus:outline-none px-3"
-              disabled={isLoading === true ? true : false}
-              value={formFields.email}
-              name="email"
-              onChange={onChangeInput}
-            />
-          </div>
-          <div className="w-full form-group mb-4">
-            <h4>Password</h4>
-            <div className="relative w-full">
-              <input
-                type={isShowPass === true ? "text" : "password"}
-                className="w-full h-[45px] border border-[rgba(0,0,0,0.1)] rounded-md focus:border-[rgba(0,0,0,0.7)] 
-              focus:outline-none px-3"
-                name="password"
-                disabled={isLoading}
-                value={formFields.password}
-                onChange={onChangeInput}
-              />
-              <Button
-                className="!absolute top-[7px] right-[7px] z-50 !rounded-full !w-[35px] !h-[35px] !min-w-[35px]"
-                onClick={() => setisShowPass(!isShowPass)}
-              >
-                {isShowPass === false ? (
-                  <FaEye className="text-[18px]" />
-                ) : (
-                  <FaEyeSlash className="text-[18px]" />
-                )}
-              </Button>
-            </div>
-          </div>
-          <div className="w-full form-group mb-4 flex items-center justify-between">
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Remember Me"
-            />
-          </div>
-
-          <div className="flex !items-center mt-3 mb-3">
-            <Button
-              type="submit"
-              disabled={!validValue}
-              className="!bg-black !text-white w-full gap-3"
-            >
-              Sign Up
-              {isLoading === true ? <CircularProgress color="inherit" /> : ""}
-            </Button>
-          </div>
-          <h2 className="text-[13px] justify-between flex  text-gray-700 cursor-pointer pt-3">
-            Already Have An Account?
-            <Link
-              to="/login"
-              className="link text-[13px]  text-gray-700 underline cursor-pointer"
-            >
-              Login Now
-            </Link>
-          </h2>
-        </form>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </div>
-    </section>
+  
+        {/* Login Link */}
+        <h2 className="text-[12px] sm:text-[13px] flex flex-wrap justify-between text-gray-700 cursor-pointer pt-3">
+          Already Have An Account?
+          <Link
+            to="/login"
+            className="link text-[12px] sm:text-[14px] text-black !font-bold underline cursor-pointer"          >
+            Login Now
+          </Link>
+        </h2>
+      </form>
+    </div>
+  </section>
+  
   );
 }
