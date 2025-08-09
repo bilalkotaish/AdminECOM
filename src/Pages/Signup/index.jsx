@@ -123,8 +123,8 @@ export default function Signup() {
       });
   };
   return (
-    <section className="relative !bg-white  loginsection">
-    {/* Header */}
+<section className="relative !bg-white loginsection min-h-screen">
+{/* Header */}
     <header className="w-full lg:fixed z-50 top-0 left-0 px-4 py-2 flex flex-wrap items-center justify-center md:justify-between">
       <Link to="/" className="mb-2 md:mb-0">
         <svg
